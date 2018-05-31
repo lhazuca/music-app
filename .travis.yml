@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.5"
+cache: pip
+install:
+  - pip install -r requirements.txt
+script:
+  - python3 src/main.py &
+  - pid=$!
+  - sleep 3
+  - python -m unittest test.ArtistTestCase
+  - kill -9 $pid
+services:
+  - mysql
+before_script:
+  - mysql -e 'create database ci;'

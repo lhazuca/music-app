@@ -1,0 +1,4 @@
+tornado
+PyMySQL
+SQLAlchemy==1.2.7
+requests
