@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/matiasmpereira/alta-recursion.svg?branch=master)](https://travis-ci.com/matiasmpereira/alta-recursion)
+[![Build Status](https://travis-ci.com/matiasmpereira/music-app.svg?branch=master)](https://travis-ci.com/matiasmpereira/music-app)
 
 # mussicapp #
 
