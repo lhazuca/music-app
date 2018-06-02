@@ -14,7 +14,7 @@ Nro |   Nombre   | Legajo  | Mail
 
 # Sprint 0
 - Se hizo funcionar el servidor
-- Se realizó la primer implementación de la API para agregar artistas y eliminarlos.
+- Se realizó la primer implementación de la API para agregar, obtener y eliminar artistas del sistema.
 
 ### Retrospectiva del Sprint
 
