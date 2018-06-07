@@ -1,6 +1,5 @@
 from src.sqlAlchemyConnector.Connector import *
 
-
 class DatabaseConnector:
 
     __instance = None
@@ -20,6 +19,7 @@ class DatabaseConnector:
     def __init__(self):
         self.__connector = Connector()
 
+    # Artist methods
 
     def addArtist(self,stageName,name,lastName,age):
         self.__connector.addArtist(stageName,name,lastName,age)
@@ -29,3 +29,8 @@ class DatabaseConnector:
 
     def deleteArtist(self,stageName):
         return self.__connector.deleteArtist(stageName)
+
+    # Artist File management methods
+
+    def addArtistAudioFile(self, fileName, isAudioFile, artist):
+        return self.__connector.addArtistAudioFile(fileName, isAudioFile, artist)
