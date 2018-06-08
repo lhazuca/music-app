@@ -2,8 +2,6 @@ import unittest
 import requests
 import json
 
-<<<<<<< HEAD
-
 class AlbumTestCase(unittest.TestCase):
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
         postData = {'name': 'Jose', 'lastName': 'Perez', 'age': 34}
