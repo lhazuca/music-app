@@ -10,3 +10,18 @@ class Artist(Base):
     name = Column(String(30))
     lastName = Column(String(30))
     age = Column(Integer())
+
+
+class User_Data(Base):
+    __tablename__ = 'User_Data'
+    userName = Column(String(50), primary_key=True)
+    name = Column(String(40))
+    lastName = Column(String(40))
+    age = Column(Integer())
+
+
+class User_Login(Base):
+    __tablename__ = 'User_Login'
+    userName = Column(String(50), ForeignKey('User_Data.userName',ondelete='CASCADE'),primary_key=True)
+    password = Column(String(128))
+    lastPassChange = Column(DateTime, default=func.now())
