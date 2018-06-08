@@ -45,6 +45,7 @@ class PlaylistHandler(tornado.web.RequestHandler):
         try:
             data = json.loads(self.request.body.decode('utf-8'))
             playlistName = data['playlistName']
+            self.application.db.deletePlaylist(playlistName)
         except Exception as e:
             raise e
             statusCode = 400
