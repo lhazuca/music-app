@@ -16,8 +16,25 @@ class AudioFileHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def post(self, filename):
+    def get(self):
+        print("llego a handler")
+        statusCode = 400
+        statusMessage = 'Bad request'
+        try:
+            print("por traer parametro")
+            res = self.get_arguments('filename')
+            print(res)
+            print(res[0])
+            statusCode = 200
+            statusMessage = self.application.db.getAudioFilesWithSubString(res[0])
+        except Exception as e:
+            raise (e)
+            statusCode = 400
+            statusMessage = "Not match audiofiles"
+        self.set_status(statusCode)
+        self.write(statusMessage)
 
+    def post(self, filename):
         statusCode = 200
         statusMessage = 'Audio file added'
         try:

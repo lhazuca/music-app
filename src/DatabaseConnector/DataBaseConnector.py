@@ -47,6 +47,9 @@ class DatabaseConnector:
     def getAudioFile(self,filename):
         return self.__connector.getAudioFile(filename)
 
+    def getAudioFilesWithSubString(self,subString):
+        return self.__connector.getAudioFilesWithSubString(subString)
+
     def addUser(self,userName,password, name, lastName, age):
         self.__connector.addUser(userName,password, name, lastName, age)
 

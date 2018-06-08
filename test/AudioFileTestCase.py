@@ -7,7 +7,6 @@ import requests
 class AudioFileTestCase(unittest.TestCase):
 
     def test_addAudioFile_Music_MP3(self):
-
         postData = {'isAudioFile': True, 'filename': 'MusicMP3'}
         addAudioFileReq = requests.post('http://localhost:8080/apiv1/audiofile/MusicMP3', data=postData)
 
@@ -21,11 +20,8 @@ class AudioFileTestCase(unittest.TestCase):
         self.assertEqual(jsonResponse['audiofile']['filename'], 'MusicMP3')
         self.assertEqual(jsonResponse['audiofile']['isAudioFile'], True)
 
-
     def tearDown(self):
-
         requests.delete('http://localhost:8080/apiv1/audiofile/MusicMP3')
-
 
 
 if __name__ == '__main__':

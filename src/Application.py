@@ -13,6 +13,7 @@ class Application(tornado.web.Application):
         (r"/", RootHandler),
         (r"/apiv1/artist/(.*)", ArtistHandler),
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
+        (r"/apiv1/audiofile", AudioFileHandler),
         (r"/apiv1/user", UserHandler),
 
         ]
