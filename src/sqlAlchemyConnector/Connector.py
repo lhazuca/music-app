@@ -34,8 +34,22 @@ class Connector:
     def addArtistAudioFile(self, fileName, isAudioFile, artist):
         self.__dbSession.add(AudioFile(filename=fileName, isAudioFile=isAudioFile))
         self.__dbSession.commit()
-        self.__dbSession.add(AudioFileByArtist(stageName=artist, filename=fileName))
+        # self.__dbSession.add(AudioFileByArtist(stageName=artist, filename=fileName))
+        # self.__dbSession.commit()
+
+    def deleteArtistAudioFile(self, filename, artist):
+        self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename))
         self.__dbSession.commit()
+        # self.__dbSession.delete(self.__dbSession.query(AudioFileByArtist).filter_by(filename=filename, artist=artist))
+        # self.__dbSession.commit()
 
     def getAudioFile(self, fileName):
         return getAudioFileParser(self.__dbSession.query(AudioFile).filter_by(filename=fileName).first())
+
+    def addAudioFile(self, filename, isAudioFile):
+        self.__dbSession.add(AudioFile(filename=filename, isAudioFile=isAudioFile))
+        self.__dbSession.commit()
+
+    def deleteAudioFile(self, filename):
+        self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename).first())
+        self.__dbSession.commit()
