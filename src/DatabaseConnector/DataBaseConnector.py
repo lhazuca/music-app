@@ -29,3 +29,14 @@ class DatabaseConnector:
 
     def deleteArtist(self,stageName):
         return self.__connector.deleteArtist(stageName)
+
+    # Playlist management methods
+
+    def addPlaylist(self, playlistName, userName, description):
+        return self.__connector.addPlaylist(playlistName, userName, description)
+
+    def deletePlaylist(self, playlistName):
+        return self.__connector.deletePlaylist(playlistName)
+
+    def getPlaylist(self, playlistName):
+        return self.__connector.getPlaylist(playlistName)

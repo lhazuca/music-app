@@ -2,12 +2,14 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from src.models.models import *
 from src.parsers.ArtistParser import getArtistParser
+from src.parsers.PlaylistParser import getPlaylistParser
+
 
 class Connector:
 
     def __init__(self):
 
-        dbRoot = 'mysql+pymysql://root@localhost:3306/ci'
+        dbRoot = 'mysql+pymysql://root:root@localhost:3306/ci'
         self.__engine = create_engine(dbRoot)
         Base.metadata.create_all(self.__engine)
         self.__session = sessionmaker()
@@ -23,4 +25,17 @@ class Connector:
 
     def deleteArtist(self,stageName):
         self.__dbSession.delete(self.__dbSession.query(Artist).filter_by(stageName=stageName).first())
+        self.__dbSession.commit()
+
+    # Playlist management
+
+    def getPlaylist(self, playlistName):
+        return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
+
+    def addPlaylist(self, playlistName, userName, description):
+        self.__dbSession.add(Playlist(playlistName=playlistName, userName=userName, description=description))
+        self.__dbSession.commit()
+
+    def deletePlaylist(self, playlistName):
+        self.__dbSession.delete(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
         self.__dbSession.commit()
