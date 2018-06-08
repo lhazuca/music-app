@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/matiasmpereira/iisoft-tp.svg?branch=master)](https://travis-ci.com/matiasmpereira/iisoft-tp)
-
+[![Build Status](https://travis-ci.com/matiasmpereira/music-app.svg?branch=master)](https://travis-ci.com/matiasmpereira/music-app)
 
 # TP IISoft
 
