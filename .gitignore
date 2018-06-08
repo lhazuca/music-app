@@ -1,7 +1,5 @@
 .idea/
 __pycache__/
 *.pyc
-.env
-.venv
-env/
-venv/
+/venv*
+/test/_trial_temp
