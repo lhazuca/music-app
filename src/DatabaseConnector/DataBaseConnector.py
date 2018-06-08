@@ -52,3 +52,8 @@ class DatabaseConnector:
 
     def deleteUser(self,userName):
         return self.__connector.deleteUser(userName)
+
+    #Album methods
+
+    def addAlbum(self,albumName,albumYear,albumOwner):
+            self.__connector.addAlbum(albumName,albumYear,albumOwner)
