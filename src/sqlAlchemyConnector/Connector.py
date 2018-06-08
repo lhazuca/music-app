@@ -10,7 +10,7 @@ from src.parsers.AudioFileParser import getAudioFileParser
 class Connector:
 
     def __init__(self):
-        dbRoot = 'mysql+pymysql://root@localhost:3306/ci'
+        dbRoot = 'mysql+pymysql://root:root@localhost:3306/ci'
         self.__engine = create_engine(dbRoot)
         Base.metadata.create_all(self.__engine)
         self.__session = sessionmaker()
@@ -42,6 +42,10 @@ class Connector:
 
     def deletePlaylist(self, playlistName):
         self.__dbSession.delete(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
+        self.__dbSession.commit()
+
+    def addPlaylistAudioFile(self, audioFile, playlistName):
+        self.__dbSession.add(AudioFileByPlaylist(playlistName=playlistName, audioFile=audioFile))
         self.__dbSession.commit()
 
     # Artist Audio File management

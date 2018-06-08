@@ -17,9 +17,23 @@ class PlaylistTestCase(unittest.TestCase):
         self.assertEqual(addUserReq.reason, 'OK')
         self.assertEqual(addUserReq.text, 'User Created')
 
+        jsonDataSong1 = {'isAudioFile': True, 'filename': 'Rock baby'}
+        jsonDataSong2 = {'isAudioFile': True, 'filename': 'All night'}
+        addAudioFileReq1 = requests.post('http://localhost:8080/apiv1/audiofile/Rock baby', data=jsonDataSong1)
+        addAudioFileReq2 = requests.post('http://localhost:8080/apiv1/audiofile/All night', data=jsonDataSong2)
+
+        self.assertEqual(addAudioFileReq1.status_code, 200)
+        self.assertEqual(addAudioFileReq1.reason, 'OK')
+        self.assertEqual(addAudioFileReq1.text, 'Audio file added')
+
+        self.assertEqual(addAudioFileReq2.status_code, 200)
+        self.assertEqual(addAudioFileReq2.reason, 'OK')
+        self.assertEqual(addAudioFileReq2.text, 'Audio file added')
+
         jsonDataPlaylist = {'playlistName': 'Rock Classics',
                     'userName': 'JoseYYY',
-                    'description': 'Old rock classics'}
+                    'description': 'Old rock classics',
+                    'songs': ['Rock baby', 'All night']}
         addPlaylistReq = requests.post('http://localhost:8080/apiv1/playlist', json=jsonDataPlaylist)
 
         self.assertEqual(addPlaylistReq.status_code, 200)
@@ -32,3 +46,6 @@ class PlaylistTestCase(unittest.TestCase):
 
         jsonDataUser = {'userName':'JoseYYY'}
         requests.delete('http://localhost:8080/apiv1/user',json=jsonDataUser)
+
+        requests.delete('http://localhost:8080/apiv1/audiofile/Rock baby')
+        requests.delete('http://localhost:8080/apiv1/audiofile/All night')

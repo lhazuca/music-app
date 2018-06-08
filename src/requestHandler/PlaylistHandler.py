@@ -29,6 +29,9 @@ class PlaylistHandler(tornado.web.RequestHandler):
             userName = data['userName']
             description = data['description']
             self.application.db.addPlaylist(playlistName, userName, description)
+            songs = data['songs']
+            for song in songs:
+                self.application.db.addPlaylistAudioFile(song, playlistName)
         except Exception as e:
             raise e
             statusCode = 400
