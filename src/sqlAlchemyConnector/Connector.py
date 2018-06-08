@@ -101,5 +101,5 @@ class Connector:
     # Album managment
 
     def getAlbumLikeName(self,albumName):
-        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.name.like("%"+albumName+"%")).all())
+        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.albumName.like("%"+albumName+"%")).all())
 
