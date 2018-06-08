@@ -20,7 +20,7 @@ class DatabaseConnector:
         self.__connector = Connector()
 
     # Artist methods
-
+  
     def addArtist(self,stageName,name,lastName,age):
         self.__connector.addArtist(stageName,name,lastName,age)
 
@@ -46,3 +46,9 @@ class DatabaseConnector:
 
     def getAudioFile(self,filename):
         return self.__connector.getAudioFile(filename)
+
+    def addUser(self,userName,password, name, lastName, age):
+        self.__connector.addUser(userName,password, name, lastName, age)
+
+    def deleteUser(self,userName):
+        return self.__connector.deleteUser(userName)

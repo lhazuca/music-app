@@ -53,3 +53,19 @@ class Connector:
     def deleteAudioFile(self, filename):
         self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename).first())
         self.__dbSession.commit()
+
+    # User management
+    
+    def addUser(self,userName,password, name, lastName, age):
+        newUserData = User_Data(userName=userName, name=name, lastName = lastName, age=age)
+        newUserLogin = User_Login(userName=userName, password=password)
+
+        self.__dbSession.add(newUserData)
+        self.__dbSession.commit()
+        self.__dbSession.add(newUserLogin)
+        self.__dbSession.commit()
+
+    def deleteUser(self, userName):
+
+        self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
+        self.__dbSession.commit()
