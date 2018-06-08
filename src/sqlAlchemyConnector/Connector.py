@@ -72,7 +72,7 @@ class Connector:
 
     def addAlbum(self, albumName, albumYear, albumOwner):
         newAlbumData = Album(albumName=albumName,albumYear=albumYear)
-        newAlbumUserData=AlbumUser(albumName=albumName,albumOwner=albumOwner)
+        newAlbumUserData= AlbumUser(albumName=albumName,ownerName=albumOwner)
         self.__dbSession.add(newAlbumData)
         self.__dbSession.commit()
         self.__dbSession.add(newAlbumUserData)

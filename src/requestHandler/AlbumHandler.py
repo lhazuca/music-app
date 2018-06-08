@@ -13,7 +13,8 @@ class AlbumHandler(tornado.web.RequestHandler) :
             year = int(data['year'])
             owner = data['owner']
             self.application.db.addAlbum(name,year,owner)
-        except Exception as e :
+        except Exception as e:
+            raise e
             statusCode = 400
             statusMessage = "Album not added"
         self.set_status(statusCode)

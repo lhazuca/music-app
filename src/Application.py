@@ -1,6 +1,6 @@
 import tornado.web
 from src.DatabaseConnector.DataBaseConnector import DatabaseConnector
-from src.requestHandler import AlbumHandler
+from src.requestHandler.AlbumHandler import AlbumHandler
 from src.requestHandler.ArtistHandler import ArtistHandler
 from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.AudioFileHandler import AudioFileHandler
