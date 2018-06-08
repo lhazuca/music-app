@@ -1,12 +1,15 @@
 import tornado.web
+import json
 
 
 class PlaylistHandler(tornado.web.RequestHandler):
 
-    def get(self, playlistName):
+    def get(self):
         statusCode = 400
         statusMessage = 'Bad request'
         try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            playlistName = data['playlistName']
             statusCode = 200
             statusMessage = self.application.db.getPlaylist(playlistName)
         except Exception as e:
@@ -16,14 +19,15 @@ class PlaylistHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def post(self, playlistName):
+    def post(self):
 
         statusCode = 200
         statusMessage = 'Playlist added'
         try:
-            # playlistName = self.get_argument('playlistName')
-            userName = self.get_argument('userName')
-            description = self.get_argument('description')
+            data = json.loads(self.request.body.decode('utf-8'))
+            playlistName = data['playlistName']
+            userName = data['userName']
+            description = data['description']
             self.application.db.addPlaylist(playlistName, userName, description)
         except Exception as e:
             raise e
@@ -32,11 +36,12 @@ class PlaylistHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def delete(self, playlistName):
+    def delete(self):
         statusCode = 200
         statusMessage = 'Playlist deleted'
         try:
-            self.application.db.deletePlaylist(playlistName)
+            data = json.loads(self.request.body.decode('utf-8'))
+            playlistName = data['playlistName']
         except Exception as e:
             raise e
             statusCode = 400

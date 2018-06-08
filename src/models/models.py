@@ -14,7 +14,7 @@ class Artist(Base):
 class Playlist(Base):
     __tablename__ = 'Playlist'
     playlistName = Column(String(50), primary_key=True)
-    userName = Column(String(40), primary_key=True)
+    userName = Column(String(40), ForeignKey('User_Data.userName', ondelete='CASCADE'), primary_key=True)
     description = Column(String(100))
 
 # class AudioFileByPlaylist(Base):

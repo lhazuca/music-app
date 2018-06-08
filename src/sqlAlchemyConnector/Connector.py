@@ -16,6 +16,8 @@ class Connector:
         self.__session.configure(bind=self.__engine)
         self.__dbSession = self.__session()
 
+    # Artist management
+
     def addArtist(self, stageName, name, lastName, age):
         self.__dbSession.add(Artist(stageName=stageName, name=name, lastName=lastName, age=age))
         self.__dbSession.commit()
@@ -39,6 +41,8 @@ class Connector:
     def deletePlaylist(self, playlistName):
         self.__dbSession.delete(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
         self.__dbSession.commit()
+
+    # User management
 
     def addUser(self,userName,password, name, lastName, age):
         newUserData = User_Data(userName=userName, name=name, lastName = lastName, age=age)

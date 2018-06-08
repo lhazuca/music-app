@@ -11,7 +11,7 @@ class Application(tornado.web.Application):
         handlers = [
         (r"/", RootHandler),
         (r"/apiv1/artist/(.*)", ArtistHandler),
-        (r"/apiv1/playlist/(.*)", PlaylistHandler),
+        (r"/apiv1/playlist", PlaylistHandler),
         (r"/apiv1/user", UserHandler),
 
         ]
