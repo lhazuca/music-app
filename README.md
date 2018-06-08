@@ -27,4 +27,3 @@ Descubrimos la necesidad de nivelar o emparejar el nivel de conocimiento y manej
 Se busca mejorar de, forma incremental, la funcionalidad implementada, atacando las primeras User Stories base, pertenecientes al Walking Skeleton del Visual Story Mapping de nuestro proyecto.
 
 A su vez, se busca sumar algunos User Story, planificados para el Sprint 2, orientados al agregado de albumes al sistema.
-

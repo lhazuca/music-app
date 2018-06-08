@@ -19,8 +19,9 @@ class DatabaseConnector:
     def __init__(self):
         self.__connector = Connector()
 
-    # Artist methods
-  
+
+    # Artist management methods
+
     def addArtist(self,stageName,name,lastName,age):
         self.__connector.addArtist(stageName,name,lastName,age)
 
@@ -29,6 +30,20 @@ class DatabaseConnector:
 
     def deleteArtist(self,stageName):
         return self.__connector.deleteArtist(stageName)
+
+    # Playlist management methods
+
+    def addPlaylist(self, playlistName, userName, description):
+        return self.__connector.addPlaylist(playlistName, userName, description)
+
+    def deletePlaylist(self, playlistName):
+        return self.__connector.deletePlaylist(playlistName)
+
+    def getPlaylist(self, playlistName):
+        return self.__connector.getPlaylist(playlistName)
+
+    def addPlaylistAudioFile(self, audioFile, playlistName):
+        return self.__connector.addPlaylistAudioFile(audioFile, playlistName)
 
     # Artist File management methods
 
@@ -47,6 +62,8 @@ class DatabaseConnector:
     def getAudioFile(self,filename):
         return self.__connector.getAudioFile(filename)
 
+    # User managemet methods
+
     def addUser(self,userName,password, name, lastName, age):
         self.__connector.addUser(userName,password, name, lastName, age)
 
@@ -57,3 +74,6 @@ class DatabaseConnector:
 
     def addAlbum(self,albumName,albumYear,albumOwner):
             self.__connector.addAlbum(albumName,albumYear,albumOwner)
+
+    def getAlbumLikeName(self,albumName):
+        return self.__connector.getAlbumLikeName(albumName)

@@ -3,8 +3,9 @@ from sqlalchemy.orm import sessionmaker
 
 from src.models.models import *
 from src.parsers.ArtistParser import getArtistParser
+from src.parsers.PlaylistParser import getPlaylistParser
 from src.parsers.AudioFileParser import getAudioFileParser
-
+from src.parsers.AlbumParser import getAlbumLikeNameParser
 
 class Connector:
 
@@ -16,7 +17,8 @@ class Connector:
         self.__session.configure(bind=self.__engine)
         self.__dbSession = self.__session()
 
-    # Artist Management
+
+    # Artist management
 
     def addArtist(self, stageName, name, lastName, age):
         self.__dbSession.add(Artist(stageName=stageName, name=name, lastName=lastName, age=age))
@@ -27,6 +29,23 @@ class Connector:
 
     def deleteArtist(self, stageName):
         self.__dbSession.delete(self.__dbSession.query(Artist).filter_by(stageName=stageName).first())
+        self.__dbSession.commit()
+
+    # Playlist management
+
+    def getPlaylist(self, playlistName):
+        return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
+
+    def addPlaylist(self, playlistName, userName, description):
+        self.__dbSession.add(Playlist(playlistName=playlistName, userName=userName, description=description))
+        self.__dbSession.commit()
+
+    def deletePlaylist(self, playlistName):
+        self.__dbSession.delete(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
+        self.__dbSession.commit()
+
+    def addPlaylistAudioFile(self, audioFile, playlistName):
+        self.__dbSession.add(AudioFileByPlaylist(playlistName=playlistName, audioFile=audioFile))
         self.__dbSession.commit()
 
     # Artist Audio File management
@@ -55,7 +74,7 @@ class Connector:
         self.__dbSession.commit()
 
     # User management
-    
+
     def addUser(self,userName,password, name, lastName, age):
         newUserData = User_Data(userName=userName, name=name, lastName = lastName, age=age)
         newUserLogin = User_Login(userName=userName, password=password)
@@ -70,6 +89,7 @@ class Connector:
         self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
         self.__dbSession.commit()
 
+
     def addAlbum(self, albumName, albumYear, albumOwner):
         newAlbumData = Album(albumName=albumName,albumYear=albumYear)
         newAlbumUserData= AlbumUser(albumName=albumName,ownerName=albumOwner)
@@ -77,3 +97,9 @@ class Connector:
         self.__dbSession.commit()
         self.__dbSession.add(newAlbumUserData)
         self.__dbSession.commit()
+
+    # Album managment
+
+    def getAlbumLikeName(self,albumName):
+        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.name.like("%"+albumName+"%")).all())
+

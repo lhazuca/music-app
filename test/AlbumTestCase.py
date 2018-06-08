@@ -2,6 +2,7 @@ import unittest
 import requests
 import json
 
+<<<<<<< HEAD
 
 class AlbumTestCase(unittest.TestCase):
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
@@ -14,6 +15,14 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(addAlbumReq.status_code, 200)
         self.assertEqual(addAlbumReq.reason, 'OK')
         self.assertEqual(addAlbumReq.text, 'Album added')
+
+    def test_get_Nonexistent_Album(self):
+        data = {'albumLikeName':'albumNone'}
+        getAlbumReq = requests.get('http://localhost:8080/apiv1/albums',data=data)
+        self.assertEqual(getAlbumReq.status_code, 200)
+        self.assertEqual(getAlbumReq.reason, 'OK')
+        jsonResponse = json.loads(getAlbumReq.text)
+        self.assertEqual(len(jsonResponse), 0)
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
