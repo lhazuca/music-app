@@ -5,6 +5,7 @@ from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.PlaylistHandler import PlaylistHandler
 from src.requestHandler.AudioFileHandler import AudioFileHandler
 from src.requestHandler.UserHandler import UserHandler
+from src.requestHandler.AlbumsHandler import AlbumsHandler
 
 
 class Application(tornado.web.Application):
@@ -16,6 +17,7 @@ class Application(tornado.web.Application):
         (r"/apiv1/playlist", PlaylistHandler),
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
         (r"/apiv1/user", UserHandler),
+        (r"/apiv1/albums", AlbumsHandler),
 
         ]
         settings = dict(debug=True)

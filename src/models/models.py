@@ -45,3 +45,8 @@ class User_Login(Base):
     userName = Column(String(50), ForeignKey('User_Data.userName',ondelete='CASCADE'),primary_key=True)
     password = Column(String(128))
     lastPassChange = Column(DateTime, default=func.now())
+
+class Album(Base):
+    __tablename__ = 'Album'
+    name = Column(String(30), primary_key=True)
+    genre = Column(String(30))

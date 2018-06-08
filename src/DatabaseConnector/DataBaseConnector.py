@@ -69,3 +69,8 @@ class DatabaseConnector:
 
     def deleteUser(self,userName):
         return self.__connector.deleteUser(userName)
+
+    # Albums managment methods
+
+    def getAlbumLikeName(self,albumName):
+        return self.__connector.getAlbumLikeName(albumName)

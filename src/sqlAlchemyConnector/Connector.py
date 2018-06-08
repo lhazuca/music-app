@@ -5,7 +5,7 @@ from src.models.models import *
 from src.parsers.ArtistParser import getArtistParser
 from src.parsers.PlaylistParser import getPlaylistParser
 from src.parsers.AudioFileParser import getAudioFileParser
-
+from src.parsers.AlbumParser import getAlbumLikeNameParser
 
 class Connector:
 
@@ -88,3 +88,13 @@ class Connector:
 
         self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
         self.__dbSession.commit()
+
+    # Album managment
+
+    def getAlbumLikeName(self,albumName):
+        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.name.like("%"+albumName+"%")).all())
+
+
+
+
+
