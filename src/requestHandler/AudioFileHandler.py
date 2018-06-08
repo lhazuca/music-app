@@ -22,7 +22,7 @@ class AudioFileHandler(tornado.web.RequestHandler):
         statusMessage = 'Audio file added'
         try:
             filename = self.get_argument('filename')
-            isAudioFile = self.get_argument('isAudioFile')
+            isAudioFile = bool(self.get_argument('isAudioFile'))
             self.application.db.addAudioFile(filename, isAudioFile)
         except Exception as e:
             raise e
