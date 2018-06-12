@@ -22,9 +22,8 @@ class ArtistTestCase(unittest.TestCase):
         self.assertEqual(jsonResponse['artist']['age'], 34)
 
 
-    # def tearDown(self):
-    #
-    #     requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
+    def tearDown(self):
+        requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
 
 
 
