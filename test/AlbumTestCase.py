@@ -16,7 +16,7 @@ class AlbumTestCase(unittest.TestCase):
 
     def test_get_Nonexistent_Album(self):
         data = {'albumLikeName':'albumNone'}
-        getAlbumReq = requests.get('http://localhost:8080/apiv1/albums',data=data)
+        getAlbumReq = requests.get('http://localhost:8080/apiv1/album',data=data)
         self.assertEqual(getAlbumReq.status_code, 200)
         self.assertEqual(getAlbumReq.reason, 'OK')
         jsonResponse = json.loads(getAlbumReq.text)
@@ -24,6 +24,7 @@ class AlbumTestCase(unittest.TestCase):
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
+
 
 
 if __name__ == '__main__':

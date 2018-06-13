@@ -6,7 +6,6 @@ from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.PlaylistHandler import PlaylistHandler
 from src.requestHandler.AudioFileHandler import AudioFileHandler
 from src.requestHandler.UserHandler import UserHandler
-from src.requestHandler.AlbumsHandler import AlbumsHandler
 
 
 class Application(tornado.web.Application):
