@@ -23,7 +23,9 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(len(jsonResponse), 0)
 
     def tearDown(self):
+        jsonData = {'albumName': 'AlbumX'}
         requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
+        requests.delete('http://localhost:8080/apiv1/album', json = jsonData)
 
 
 

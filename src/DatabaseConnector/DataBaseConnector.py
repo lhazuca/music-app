@@ -77,3 +77,6 @@ class DatabaseConnector:
 
     def getAlbumLikeName(self,albumName):
         return self.__connector.getAlbumLikeName(albumName)
+
+    def deleteAlbum(self,albumName):
+        return self.__connector.deleteAlbum(albumName)

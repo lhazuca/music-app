@@ -103,3 +103,7 @@ class Connector:
     def getAlbumLikeName(self,albumName):
         return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.albumName.like("%"+albumName+"%")).all())
 
+    def deleteAlbum(self, albumName):
+        self.__dbSession.delete(self.__dbSession.query(Album).filter_by(albumName=albumName).first())
+        self.__dbSession.commit()
+

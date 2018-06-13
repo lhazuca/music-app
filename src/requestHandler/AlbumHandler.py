@@ -32,3 +32,16 @@ class AlbumHandler(tornado.web.RequestHandler) :
         self.set_status(statusCode)
         self.write(statusMessage)
 
+    def delete(self):
+        statusCode = 200
+        statusMessage = 'Album deleted'
+        try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            albumName = data['albumName']
+            self.application.db.deleteAlbum(albumName)
+        except Exception as e:
+            raise e
+            statusMessage = 'Album not deleted'
+            statusCode = 400
+        self.set_status(statusCode)
+        self.write(statusMessage)
