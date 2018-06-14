@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from src.models.models import *
 from src.parsers.ArtistParser import getArtistParser
 from src.parsers.AudioFileParser import getAudioFileParser, getAudioFileLikeNameParser
-from src.parsers.PlaylistParser import getPlaylistParser
+from src.parsers.PlaylistParser import getPlaylistParser, getPlaylistWithSubString
 
 
 class Connector:
@@ -91,3 +91,6 @@ class Connector:
 
     def getAudioFilesWithSubString(self, subString):
         return getAudioFileLikeNameParser(self.__dbSession.query(AudioFile).filter(AudioFile.filename.like("%"+subString+"%")).all())
+
+    def getPlaylistWithSubString(self,subString):
+        return getPlaylistWithSubString(self.__dbSession.query(Playlist).filter(Playlist.playlistName.like("%"+subString+"%")).all())

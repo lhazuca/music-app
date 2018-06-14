@@ -19,6 +19,20 @@ class PlaylistHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
+    def get(self):
+        statusCode = 400
+        statusMessage = 'Bad request'
+        try:
+            res = self.get_arguments('playlistName')
+            statusCode = 200
+            statusMessage = self.application.db.getPlaylistWithSubString(res[0])
+        except Exception as e:
+            raise (e)
+            statusCode = 400
+            statusMessage = "Not match audiofiles"
+        self.set_status(statusCode)
+        self.write(statusMessage)
+
     def post(self):
 
         statusCode = 200

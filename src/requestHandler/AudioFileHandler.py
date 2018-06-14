@@ -17,14 +17,10 @@ class AudioFileHandler(tornado.web.RequestHandler):
         self.write(statusMessage)
 
     def get(self):
-        print("llego a handler")
         statusCode = 400
         statusMessage = 'Bad request'
         try:
-            print("por traer parametro")
             res = self.get_arguments('filename')
-            print(res)
-            print(res[0])
             statusCode = 200
             statusMessage = self.application.db.getAudioFilesWithSubString(res[0])
         except Exception as e:
