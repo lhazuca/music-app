@@ -1,5 +1,6 @@
 import tornado.web
 from src.DatabaseConnector.DataBaseConnector import DatabaseConnector
+from src.requestHandler.AlbumHandler import AlbumHandler
 from src.requestHandler.ArtistHandler import ArtistHandler
 from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.PlaylistHandler import PlaylistHandler
@@ -18,6 +19,7 @@ class Application(tornado.web.Application):
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
         (r"/apiv1/audiofile", AudioFileHandler),
         (r"/apiv1/user", UserHandler),
+        (r"/apiv1/album", AlbumHandler)
 
         ]
         settings = dict(debug=True)
