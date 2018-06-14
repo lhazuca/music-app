@@ -8,21 +8,6 @@ class PlaylistHandler(tornado.web.RequestHandler):
         statusCode = 400
         statusMessage = 'Bad request'
         try:
-            data = json.loads(self.request.body.decode('utf-8'))
-            playlistName = data['playlistName']
-            statusCode = 200
-            statusMessage = self.application.db.getPlaylist(playlistName)
-        except Exception as e:
-            raise (e)
-            statusCode = 400
-            statusMessage = "Playlist not added"
-        self.set_status(statusCode)
-        self.write(statusMessage)
-
-    def get(self):
-        statusCode = 400
-        statusMessage = 'Bad request'
-        try:
             res = self.get_arguments('playlistName')
             statusCode = 200
             statusMessage = self.application.db.getPlaylistWithSubString(res[0])
@@ -33,13 +18,13 @@ class PlaylistHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def post(self):
+    def post(self,playlistName):
 
         statusCode = 200
         statusMessage = 'Playlist added'
         try:
             data = json.loads(self.request.body.decode('utf-8'))
-            playlistName = data['playlistName']
+            # playlistName = data['playlistName']
             userName = data['userName']
             description = data['description']
             self.application.db.addPlaylist(playlistName, userName, description)

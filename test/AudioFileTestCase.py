@@ -14,15 +14,16 @@ class AudioFileTestCase(unittest.TestCase):
         self.assertEqual(addAudioFileReq.reason, 'OK')
         self.assertEqual(addAudioFileReq.text, 'Audio file added')
 
-        getAudioFileReq = requests.get('http://localhost:8080/apiv1/audiofile/MusicMP3')
+        getData ={'filename':'MusicMP3'}
+        getAudioFileReq = requests.get('http://localhost:8080/apiv1/audiofile.search',params=getData)
         self.assertEqual(getAudioFileReq.status_code, 200)
         jsonResponse = json.loads(getAudioFileReq.text)
-        self.assertEqual(jsonResponse['audiofile']['filename'], 'MusicMP3')
-        self.assertEqual(jsonResponse['audiofile']['isAudioFile'], True)
+        audiofile = jsonResponse[0]
+        self.assertEqual(audiofile['filename'], 'MusicMP3')
+        self.assertEqual(audiofile['isAudioFile'], True)
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/audiofile/MusicMP3')
-
 
 if __name__ == '__main__':
     unittest.main()
