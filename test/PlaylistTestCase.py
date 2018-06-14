@@ -34,7 +34,7 @@ class PlaylistTestCase(unittest.TestCase):
                     'userName': 'JoseYYY',
                     'description': 'Old rock classics',
                     'songs': ['Rock baby', 'All night']}
-        addPlaylistReq = requests.post('http://localhost:8080/apiv1/playlist', json=jsonDataPlaylist)
+        addPlaylistReq = requests.post('http://localhost:8080/apiv1/playlist/Rock Classics', json=jsonDataPlaylist)
 
         self.assertEqual(addPlaylistReq.status_code, 200)
         self.assertEqual(addPlaylistReq.reason, 'OK')

@@ -8,7 +8,8 @@ class AudioFileHandler(tornado.web.RequestHandler):
         statusMessage = 'Bad request'
         try:
             statusCode = 200
-            statusMessage = self.application.db.getAudioFile(filename)
+            statusMessage = 'Audio file added'
+            self.application.db.getAudioFile(filename)
         except Exception as e:
             raise (e)
             statusCode = 400
