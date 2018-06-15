@@ -12,8 +12,8 @@
  |Como usuario quiero editar un tema propio|5|
  |Como usuario quiero borrar un tema propio|3|
  |Como usuario editar mis datos|2|
- |Como usuario quiero editar un album propio|5|
- |Como usuario quiero borrar un album propio|3|
+ |Como usuario quiero editar un album propio(Luca)|5|
+ |Como usuario quiero borrar un album propio(Luca)|3|
  |TOTAL|26|
 ## Hecho vs. Propuesto
 
