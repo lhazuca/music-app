@@ -8,6 +8,7 @@ from src.parsers.AudioFileParser import getAudioFileLikeNameParser
 from src.parsers.AudioFileParser import getAudioFileParser
 from src.parsers.PlaylistParser import getPlaylistParser
 from src.parsers.PlaylistParser import getPlaylistWithSubString
+from src.parsers.UserParse import getUserParse
 
 
 class Connector:
@@ -20,7 +21,6 @@ class Connector:
         self.__session.configure(bind=self.__engine)
         self.__dbSession = self.__session()
 
-
     # Artist management
 
     def addArtist(self, stageName, name, lastName, age):
@@ -32,7 +32,7 @@ class Connector:
 
     def deleteArtist(self, stageName):
         first = self.__dbSession.query(Artist).filter_by(stageName=stageName).first()
-        if(first != None):
+        if (first != None):
             self.__dbSession.delete(first)
             self.__dbSession.commit()
 
@@ -80,8 +80,8 @@ class Connector:
 
     # User management
 
-    def addUser(self,userName,password, name, lastName, age):
-        newUserData = User_Data(userName=userName, name=name, lastName = lastName, age=age)
+    def addUser(self, userName, password, name, lastName, age):
+        newUserData = User_Data(userName=userName, name=name, lastName=lastName, age=age)
         newUserLogin = User_Login(userName=userName, password=password)
 
         self.__dbSession.add(newUserData)
@@ -90,19 +90,27 @@ class Connector:
         self.__dbSession.commit()
 
     def deleteUser(self, userName):
-
         self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
         self.__dbSession.commit()
 
-    def getAudioFilesWithSubString(self, subString):
-        return getAudioFileLikeNameParser(self.__dbSession.query(AudioFile).filter(AudioFile.filename.like("%"+subString+"%")).all())
+    def updateUser(self, userName, keyAndValues):
+        self.__dbSession.query(User_Data).filter(User_Data.userName == userName).update(keyAndValues)
+        self.__dbSession.commit()
 
-    def getPlaylistWithSubString(self,subString):
-        return getPlaylistWithSubString(self.__dbSession.query(Playlist).filter(Playlist.playlistName.like("%"+subString+"%")).all())
+    def getUser(self, userName):
+        return getUserParse(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
+
+    def getAudioFilesWithSubString(self, subString):
+        return getAudioFileLikeNameParser(
+            self.__dbSession.query(AudioFile).filter(AudioFile.filename.like("%" + subString + "%")).all())
+
+    def getPlaylistWithSubString(self, subString):
+        return getPlaylistWithSubString(
+            self.__dbSession.query(Playlist).filter(Playlist.playlistName.like("%" + subString + "%")).all())
 
     def addAlbum(self, albumName, albumYear, albumOwner):
-        newAlbumData = Album(albumName=albumName,albumYear=albumYear)
-        newAlbumUserData= AlbumUser(albumName=albumName,ownerName=albumOwner)
+        newAlbumData = Album(albumName=albumName, albumYear=albumYear)
+        newAlbumUserData = AlbumUser(albumName=albumName, ownerName=albumOwner)
         self.__dbSession.add(newAlbumData)
         self.__dbSession.commit()
         self.__dbSession.add(newAlbumUserData)
@@ -110,11 +118,12 @@ class Connector:
 
     # Album managment
 
-    def getAlbumLikeName(self,albumName):
-        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.albumName.like("%"+albumName+"%")).all())
+    def getAlbumLikeName(self, albumName):
+        return getAlbumLikeNameParser(
+            self.__dbSession.query(Album).filter(Album.albumName.like("%" + albumName + "%")).all())
 
     def deleteAlbum(self, albumName):
         itemToBeDeleted = self.__dbSession.query(Album).filter_by(albumName=albumName).first()
-        if(itemToBeDeleted != None):
+        if (itemToBeDeleted != None):
             self.__dbSession.delete(itemToBeDeleted)
             self.__dbSession.commit()
