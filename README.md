@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.com/matiasmpereira/music-app.svg?branch=master)](https://travis-ci.com/matiasmpereira/music-app)
 
-# TP IISoft
-
 # MusicApp #
 
 ## Integrantes: 
