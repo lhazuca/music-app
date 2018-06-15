@@ -58,7 +58,7 @@ class Connector:
     def addArtistAudioFile(self, fileName, isAudioFile, artist):
         self.__dbSession.add(AudioFile(filename=fileName, isAudioFile=isAudioFile))
         self.__dbSession.commit()
-        self.__dbSession.add(AudioFileByArtist(stageName=artist, filename=fileName))
+        self.__dbSession.add(AudioFileByArtist(userName=artist, filename=fileName))
         self.__dbSession.commit()
 
     def deleteArtistAudioFile(self, filename, artist):

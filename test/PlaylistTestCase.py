@@ -44,9 +44,9 @@ class PlaylistTestCase(unittest.TestCase):
 
     def delete(self):
         requests.delete('http://localhost:8080/apiv1/user/rm/JoseYYY')
-        deletePlaylist = requests.delete('http://localhost:8080/apiv1/playlist/rm/Rock Classics')
-        requests.delete('http://localhost:8080/apiv1/audiofile/Rock baby')
-        requests.delete('http://localhost:8080/apiv1/audiofile/All night')
+        # deletePlaylist = requests.delete('http://localhost:8080/apiv1/playlist/rm/Rock Classics')
+        # requests.delete('http://localhost:8080/apiv1/audiofile/Rock baby')
+        # requests.delete('http://localhost:8080/apiv1/audiofile/All night')
 
 
 if __name__ == '__main__':
