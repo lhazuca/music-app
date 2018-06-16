@@ -5,21 +5,28 @@
   * Porque hay un artista y un usuario? No son lo mismo?
 
 ## Backlog
- |UserStory|UserStoryPoints|
- |---------|---------------|
- |Como usuario quiero buscar una playlist|5|
- |Como usuario quiero darme de baja|2|
- |Como usuario quiero editar un tema propio|5|
- |Como usuario quiero borrar un tema propio|3|
- |Como usuario editar mis datos|2|
- |Como usuario quiero editar un album propio(Luca)|5|
- |Como usuario quiero borrar un album propio(Luca)|3|
- |TOTAL|26|
+ |UserStory|UserStoryPoints|Hecho|
+ |---------|---------------|-----|
+ |Como usuario quiero buscar una playlist|5|SI|
+ |Como usuario quiero darme de baja|2|SI|
+ |Como usuario quiero editar un tema propio|5|NO|
+ |Como usuario quiero borrar un tema propio|3|SI|
+ |Como usuario editar mis datos|2|NO|
+ |Como usuario quiero editar un album propio(Luca)|5|NO|
+ |Como usuario quiero borrar un album propio(Luca)|3|SI|  
+ |TOTAL|26||
 ## Hecho vs. Propuesto
 
 |PROPUESTO|HECHO|
 |---|---|
-|*25*|<span style="color:yellow">*A Completar*</span>
+|*25*|<span style="color:red">*13*</span>
 
-## Retrospectiva
+## Próximo sprint
+
+### Sprint técnico
+
+* Poner en común la base de datos y normalizarla
+* Tener un nuevo usuario con su pass para ci-travis
+* Agregar batería de test en postman
+* Tener un script que corra los test de python para agilizar CI
 
