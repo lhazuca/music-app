@@ -28,5 +28,5 @@
 * Poner en común la base de datos y normalizarla
 * Tener un nuevo usuario con su pass para ci-travis
 * Agregar batería de test en postman
-* Tener un script que corra los test de python para agilizar CI
+* Tener un script que corra los test de python para agilizar CI 
 
