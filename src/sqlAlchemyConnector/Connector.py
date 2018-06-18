@@ -111,3 +111,10 @@ class Connector:
             self.__dbSession.delete(itemToBeDeleted)
             self.__dbSession.commit()
 
+    def getAlbum(self, albumId):
+        return getAlbumParser(self.__dbSession.query(Album).filter(Album.albumName.__eq__(albumId)).first())
+
+    def updateAlbum(self, albumId, data):
+        self.__dbSession.query(Album).filter_by(albumName=albumId).update(data)
+        self.__dbSession.commit()
+
