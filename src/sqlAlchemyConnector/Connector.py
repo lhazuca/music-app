@@ -11,7 +11,7 @@ from src.parsers.AlbumParser import getAlbumParser
 class Connector:
 
     def __init__(self):
-        dbRoot = 'mysql+pymysql://root:root@localhost:3306/ci'
+        dbRoot = 'mysql+pymysql://root@localhost:3306/ci'
         self.__engine = create_engine(dbRoot)
         Base.metadata.create_all(self.__engine)
         self.__session = sessionmaker()
