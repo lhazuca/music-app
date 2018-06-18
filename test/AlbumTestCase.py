@@ -25,7 +25,7 @@ class AlbumTestCase(unittest.TestCase):
     def tearDown(self):
         jsonData = {'albumName': 'AlbumX'}
         requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
-        requests.delete('http://localhost:8080/apiv1/album', json = jsonData)
+        requests.delete('http://localhost:8080/apiv1/album/AlbumX')
 
 
 
