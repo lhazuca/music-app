@@ -6,11 +6,12 @@ from src.parsers.ArtistParser import getArtistParser
 from src.parsers.PlaylistParser import getPlaylistParser
 from src.parsers.AudioFileParser import getAudioFileParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
+from src.parsers.AlbumParser import getAlbumParser
 
 class Connector:
 
     def __init__(self):
-        dbRoot = 'mysql+pymysql://root@localhost:3306/ci'
+        dbRoot = 'mysql+pymysql://root:root@localhost:3306/ci'
         self.__engine = create_engine(dbRoot)
         Base.metadata.create_all(self.__engine)
         self.__session = sessionmaker()
@@ -94,7 +95,7 @@ class Connector:
 
     def addAlbum(self, albumName, albumYear, albumOwner):
         newAlbumData = Album(albumName=albumName,albumYear=albumYear)
-        newAlbumUserData= AlbumUser(albumName=albumName,ownerName=albumOwner)
+        newAlbumUserData= AlbumUser(albumName=albumName,userName=albumOwner)
         self.__dbSession.add(newAlbumData)
         self.__dbSession.commit()
         self.__dbSession.add(newAlbumUserData)

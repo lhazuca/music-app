@@ -54,5 +54,5 @@ class Album(Base):
 class AlbumUser(Base):
     __tablename__ = 'AlbumUser'
     albumName = Column(String(50), ForeignKey('Album.albumName', ondelete='CASCADE'),primary_key=True)
-    ownerName = Column(String(50), ForeignKey('Artist.stageName', ondelete='CASCADE'),primary_key=True)
+    userName = Column(String(50), ForeignKey('Artist.stageName', ondelete='CASCADE'),primary_key=True)
 
