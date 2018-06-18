@@ -6,16 +6,13 @@ install:
   - pip install -r requirements.txt
 script:
   - python3 src/main.py &
-  - pid=$!
+  - echo $! > pid
   - sleep 3
-  - python -m unittest test.ArtistTestCase
-  - python -m unittest test.UserTestCase
-  - python -m unittest test.AudioFileTestCase
-  - python -m unittest test.AlbumTestCase
-  - python -m unittest test.PlaylistTestCase
-
-  - kill -9 $pid
+  - python3 test-runner.py
 services:
   - mysql
 before_script:
   - mysql -e 'create database ci;'
+  - mysql -e 'CREATE USER "ci"@"localhost" IDENTIFIED BY "ci";'
+  - mysql -e 'GRANT ALL PRIVILEGES ON * . * TO "ci"@"localhost";'
+  - mysql -e 'FLUSH PRIVILEGES;'
