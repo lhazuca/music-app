@@ -10,7 +10,7 @@ class AlbumTestCase(unittest.TestCase):
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
-        addAlbumReq = requests.post('http://localhost:8080/apiv1/album', json=albumJsonData)
+        addAlbumReq = requests.put('http://localhost:8080/apiv1/album', json=albumJsonData)
         self.assertEqual(addAlbumReq.status_code, 200)
         self.assertEqual(addAlbumReq.reason, 'OK')
         self.assertEqual(addAlbumReq.text, 'Album added')
@@ -29,7 +29,7 @@ class AlbumTestCase(unittest.TestCase):
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
-        requests.post('http://localhost:8080/apiv1/album', json=albumJsonData)
+        requests.put('http://localhost:8080/apiv1/album', json=albumJsonData)
         getAlbumReq = requests.get('http://localhost:8080/apiv1/album/AlbumX')
         albumResponse = json.loads(getAlbumReq.text, object_hook=lambda d: namedtuple('Album', d.keys())(*d.values()))
         self.assertEqual('AlbumX', albumResponse.album.albumName)
