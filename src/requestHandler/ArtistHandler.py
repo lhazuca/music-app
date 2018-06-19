@@ -25,8 +25,7 @@ class ArtistHandler(tornado.web.RequestHandler):
         try:
             name = self.get_argument('name')
             lastName = self.get_argument('lastName')
-            age = int(self.get_argument('age'))
-            self.application.db.addArtist(stageName,name,lastName,age)
+            self.application.db.addArtist(stageName,name,lastName)
         except Exception as e:
             raise e
             statusCode = 400

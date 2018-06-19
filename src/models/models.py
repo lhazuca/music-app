@@ -22,17 +22,16 @@ class AudioFileByPlaylist(Base):
     playlistName = Column(String(50), ForeignKey('Playlist.playlistName', ondelete='CASCADE'), primary_key=True)
     audioFile = Column(String(100), primary_key=True)
 
-class AudioFile(Base):
-    __tablename__ = 'AudioFile'
-    filename = Column(String(100), primary_key=True)
-    isAudioFile = Column(Boolean(False))
+class Track(Base):
+    __tablename__ = 'Track'
+    trackName = Column(String(100), primary_key=True)
+    fileContent = Column(String(100))
+    releaseDate = Column(DateTime, default=func.now())
 
-
-#TODO: Cambiar artistas por Usuarios.
-class AudioFileByArtist(Base):
-    __tablename__ = 'AudioFileByArtist'
-    artist = Column(String(40), ForeignKey('User_Data.userName',ondelete='CASCADE'),primary_key=True)
-    filename = Column(String(100),ForeignKey('AudioFile.filename',ondelete='CASCADE'),primary_key=True)
+class UserTracks(Base):
+    __tablename__ = 'UserTracks'
+    userName = Column(String(40), ForeignKey('User_Data.userName',ondelete='CASCADE'),primary_key=True)
+    trackName = Column(String(100),ForeignKey('Track.trackName',ondelete='CASCADE'),primary_key=True)
     uploaded = Column(DateTime, default=func.now())
 
 class User_Data(Base):
@@ -40,7 +39,6 @@ class User_Data(Base):
     userName = Column(String(50), primary_key=True)
     name = Column(String(40))
     lastName = Column(String(40))
-    age = Column(Integer())
 
 class User_Login(Base):
     __tablename__ = 'User_Login'

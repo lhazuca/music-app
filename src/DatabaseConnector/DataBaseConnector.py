@@ -22,8 +22,8 @@ class DatabaseConnector:
 
     # Artist management methods
 
-    def addArtist(self,stageName,name,lastName,age):
-        self.__connector.addArtist(stageName,name,lastName,age)
+    def addArtist(self,stageName,name,lastName):
+        self.__connector.addArtist(stageName,name,lastName)
 
     def getArtist(self,stageName):
         return self.__connector.getArtist(stageName)
@@ -56,17 +56,22 @@ class DatabaseConnector:
     def deleteArtistAudioFile(self, filename, artist):
         return self.__connector.deleteArtistAudioFile(filename, artist)
 
-    def addAudioFile(self, fileName, isAudioFile):
-        return self.__connector.addAudioFile(fileName, isAudioFile)
+    #Track methods
+    def addTrack(self, owner, trackName, fileContent):
+        return self.__connector.addTrack(owner,trackName, fileContent)
 
-    def deleteAudioFile(self, filename):
-        return self.__connector.deleteAudioFile(filename)
+    def deleteTrack(self, trackId):
+        return self.__connector.deleteTrack(trackId)
 
-    def getAudioFile(self,filename):
-        return self.__connector.getAudioFile(filename)
+    def getTrack(self,trackName):
+        return self.__connector.getTrack(trackName)
 
-    def getAudioFilesWithSubString(self,subString):
-        return self.__connector.getAudioFilesWithSubString(subString)
+    def getTrackLikeName(self,trackName):
+        return self.__connector.getTrackLikeName(trackName)
+
+    def updateTrack(self,trackId, data):
+        return self.__connector.updateTrack(trackId,data)
+
     # User managemet methods
 
     def addUser(self,userName,password, name, lastName, age):

@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from src.models.models import *
 from src.parsers.AlbumParser import getAlbumLikeNameParser
 from src.parsers.ArtistParser import getArtistParser
-from src.parsers.AudioFileParser import getAudioFileLikeNameParser
-from src.parsers.AudioFileParser import getAudioFileParser
+from src.parsers.TrackParse import getTrackLikeNameParser
+from src.parsers.TrackParse import getTrackParser
 from src.parsers.PlaylistParser import getPlaylistParser
 from src.parsers.PlaylistParser import getPlaylistWithSubString
 from src.parsers.UserParse import getUserParse
@@ -23,15 +23,15 @@ class Connector:
 
     # Artist management
 
-    def addArtist(self, stageName, name, lastName, age):
-        self.__dbSession.add(Artist(stageName=stageName, name=name, lastName=lastName, age=age))
+    def addArtist(self, stageName, name, lastName):
+        self.__dbSession.add(User_Data(userName=stageName, name=name, lastName=lastName))
         self.__dbSession.commit()
 
     def getArtist(self, stageName):
         return getArtistParser(self.__dbSession.query(Artist).filter_by(stageName=stageName).first())
 
     def deleteArtist(self, stageName):
-        first = self.__dbSession.query(Artist).filter_by(stageName=stageName).first()
+        first = self.__dbSession.query(User_Data).filter_by(userName=stageName).first()
         if (first != None):
             self.__dbSession.delete(first)
             self.__dbSession.commit()
@@ -55,27 +55,46 @@ class Connector:
 
     # Artist Audio File management
 
-    def addArtistAudioFile(self, fileName, isAudioFile, artist):
-        self.__dbSession.add(AudioFile(filename=fileName, isAudioFile=isAudioFile))
+    def addArtistAudioFile(self, fileName, fileContent, artist):
+        self.__dbSession.add(Track(trackName=fileName, fileContent=fileContent))
         self.__dbSession.commit()
-        self.__dbSession.add(AudioFileByArtist(userName=artist, filename=fileName))
-        self.__dbSession.commit()
-
-    def deleteArtistAudioFile(self, filename, artist):
-        self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename))
-        self.__dbSession.commit()
-        self.__dbSession.delete(self.__dbSession.query(AudioFileByArtist).filter_by(filename=filename, artist=artist))
+        self.__dbSession.add(UserTracks(userName=artist, trackName=fileName))
         self.__dbSession.commit()
 
-    def getAudioFile(self, fileName):
-        return getAudioFileParser(self.__dbSession.query(AudioFile).filter_by(filename=fileName).first())
-
-    def addAudioFile(self, filename, isAudioFile):
-        self.__dbSession.add(AudioFile(filename=filename, isAudioFile=isAudioFile))
+    def deleteArtistAudioFile(self, trackName, artist):
+        self.__dbSession.delete(self.__dbSession.query(Track).filter_by(trackName=trackName))
+        self.__dbSession.commit()
+        self.__dbSession.delete(self.__dbSession.query(UserTracks).filter_by(trackName=trackName, userName=artist))
         self.__dbSession.commit()
 
-    def deleteAudioFile(self, filename):
-        self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename).first())
+
+    #Track methods
+
+    def addTrack(self, owner,trackName, fileContent):
+        self.__dbSession.add(Track(trackName=trackName, fileContent=fileContent))
+        self.__dbSession.commit()
+        self.__dbSession.add(UserTracks(userName=owner,trackName=trackName))
+        self.__dbSession.commit()
+
+    def getTrackLikeName(self, trackName):
+        return getTrackLikeNameParser(
+            self.__dbSession.query(Track).filter(Track.trackName.like("%" + trackName + "%")).all())
+
+    def getTrack(self, trackName):
+        track = self.__dbSession.query(Track).filter_by(trackName=trackName).first()
+        if track is not None:
+            return getTrackParser(track)
+        else:
+            return 'No id was found'
+
+    def deleteTrack(self, trackId):
+        itemToBeDeleted = self.__dbSession.query(Track).filter_by(trackName=trackId).first()
+        if itemToBeDeleted is not None:
+            self.__dbSession.delete(itemToBeDeleted)
+            self.__dbSession.commit()
+
+    def updateTrack(self, trackId, data):
+        self.__dbSession.query(Track).filter_by(trackName=trackId).update(data)
         self.__dbSession.commit()
 
     # User management
@@ -100,10 +119,6 @@ class Connector:
     def getUser(self, userName):
         return getUserParse(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
 
-    def getAudioFilesWithSubString(self, subString):
-        return getAudioFileLikeNameParser(
-            self.__dbSession.query(AudioFile).filter(AudioFile.filename.like("%" + subString + "%")).all())
-
     def getPlaylistWithSubString(self, subString):
         return getPlaylistWithSubString(
             self.__dbSession.query(Playlist).filter(Playlist.playlistName.like("%" + subString + "%")).all())
@@ -127,3 +142,4 @@ class Connector:
         if (itemToBeDeleted != None):
             self.__dbSession.delete(itemToBeDeleted)
             self.__dbSession.commit()
+
