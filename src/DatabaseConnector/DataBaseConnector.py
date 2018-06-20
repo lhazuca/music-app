@@ -1,7 +1,7 @@
 from src.sqlAlchemyConnector.Connector import *
 
-class DatabaseConnector:
 
+class DatabaseConnector:
     __instance = None
 
     @classmethod
@@ -15,21 +15,22 @@ class DatabaseConnector:
             return cls.__instance
         return cls.__instance
 
-
     def __init__(self):
         self.__connector = Connector()
 
+    # User managemet methods
 
-    # Artist management methods
+    def addUser(self, userName, password, name, lastName):
+        self.__connector.addUser(userName, password, name, lastName)
 
-    def addArtist(self,stageName,name,lastName,age):
-        self.__connector.addArtist(stageName,name,lastName,age)
+    def getUser(self, userName):
+        return self.__connector.getUser(userName)
 
-    def getArtist(self,stageName):
-        return self.__connector.getArtist(stageName)
+    def deleteUser(self, userName):
+        return self.__connector.deleteUser(userName)
 
-    def deleteArtist(self,stageName):
-        return self.__connector.deleteArtist(stageName)
+    def updateUser(self, userName, userData):
+        return self.__connector.updateUser(userName, userData)
 
     # Playlist management methods
 
@@ -59,26 +60,18 @@ class DatabaseConnector:
     def deleteAudioFile(self, filename):
         return self.__connector.deleteAudioFile(filename)
 
-    def getAudioFile(self,filename):
+    def getAudioFile(self, filename):
         return self.__connector.getAudioFile(filename)
 
-    # User managemet methods
+    # Album methods
 
-    def addUser(self,userName,password, name, lastName, age):
-        self.__connector.addUser(userName,password, name, lastName, age)
+    def addAlbum(self, albumName, albumYear, albumOwner):
+        self.__connector.addAlbum(albumName, albumYear, albumOwner)
 
-    def deleteUser(self,userName):
-        return self.__connector.deleteUser(userName)
-
-    #Album methods
-
-    def addAlbum(self,albumName,albumYear,albumOwner):
-            self.__connector.addAlbum(albumName,albumYear,albumOwner)
-
-    def getAlbumLikeName(self,albumName):
+    def getAlbumLikeName(self, albumName):
         return self.__connector.getAlbumLikeName(albumName)
 
-    def deleteAlbum(self,albumName):
+    def deleteAlbum(self, albumName):
         return self.__connector.deleteAlbum(albumName)
 
     def getAlbum(self,albumId):

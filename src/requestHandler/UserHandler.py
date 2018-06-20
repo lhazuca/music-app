@@ -1,44 +1,45 @@
-import tornado.web
-from src.validationFunctions import validPassword
-from hashlib import sha512
 import json
+import tornado.web
+
 
 class UserHandler(tornado.web.RequestHandler):
 
-
-    def post(self):
-
+    # get
+    def get(self, userName):
         statusCode = 200
-        statusMessage = 'User Created'
+        statusMessage = 'User Obtained'
         try:
-            data = json.loads(self.request.body.decode('utf-8'))
-            userName = data['userName']
-            name = data['name']
-            lastName = data['lastName']
-            age = int(data['age'])
-            password = data['password']
-
-            if validPassword(password):
-                cryptPass = sha512(password.encode('utf-8')).hexdigest()
-                self.application.db.addUser(userName,cryptPass, name, lastName, age)
-            else:
-                statusCode = 400
-                statusMessage = "Bad request"
+            statusMessage = self.application.db.getUser(userName)
         except Exception as e:
+            raise e
             statusCode = 400
-            statusMessage = "Artist not added"
+            statusMessage = 'Bad request'
         self.set_status(statusCode)
         self.write(statusMessage)
 
+    # update
+    def put(self, userName):
 
-    def delete(self):
+        statusCode = 200
+        statusMessage = 'User Updated'
+        try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            self.application.db.updateUser(userName, data)
+        except Exception as e:
+            raise e
+            statusCode = 400
+            statusMessage = "User was not updated"
+        self.set_status(statusCode)
+        self.write(statusMessage)
+
+    # delete
+    def delete(self, userName):
         statusCode = 200
         statusMessage = 'User deleted'
         try:
-            data = json.loads(self.request.body.decode('utf-8'))
-            userName = data['userName']
             self.application.db.deleteUser(userName)
         except Exception as e:
+            raise e
             statusCode = 400
             statusMessage = "Bad request"
         self.set_status(statusCode)

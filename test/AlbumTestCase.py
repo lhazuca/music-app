@@ -5,8 +5,11 @@ from collections import namedtuple
 
 class AlbumTestCase(unittest.TestCase):
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez', 'age': 34}
-        requests.post('http://localhost:8080/apiv1/artist/JoseYYY', data=postData)
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        requests.put('http://localhost:8080/apiv1/user', json=jsonData)
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
