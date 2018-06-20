@@ -37,8 +37,12 @@ class Connector:
             return 'Username not found'
 
     def deleteUser(self, userName):
-        self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
-        self.__dbSession.commit()
+        user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
+        if user is not None:
+            self.__dbSession.delete(user)
+            self.__dbSession.commit()
+        else:
+            'User does not exists'
 
     def updateUser(self, userName, userdata):
         self.__dbSession.query(User_Data).filter_by(userName=userName).update(userdata)
