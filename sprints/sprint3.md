@@ -23,5 +23,6 @@
 |*36*|<span style="color:amarillo">*COMPLETAR*</span>
 
 ## Próximo sprint
-
+|UserStory|User Story Points|
+ |---------|---------------|
 |Actualizar passwords de Users (Mediante nuevo Handler)|5|
