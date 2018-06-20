@@ -4,6 +4,19 @@ import tornado.web
 
 class UserHandler(tornado.web.RequestHandler):
 
+    # get
+    def get(self, userName):
+        statusCode = 200
+        statusMessage = 'User Obtained'
+        try:
+            statusMessage = self.application.db.getUser(userName)
+        except Exception as e:
+            raise e
+            statusCode = 400
+            statusMessage = 'Bad request'
+        self.set_status(statusCode)
+        self.write(statusMessage)
+
     # update
     def put(self, userName):
 

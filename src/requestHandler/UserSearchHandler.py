@@ -30,16 +30,3 @@ class UserSearchHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    # get
-    def get(self):
-        statusCode = 200
-        statusMessage = 'User Obtained'
-        try:
-            user = self.get_argument('name')
-            statusMessage = self.application.db.getUserNamed(user)
-        except Exception as e:
-            raise e
-            statusCode = 400
-            statusMessage = 'Bad request'
-        self.set_status(statusCode)
-        self.write(statusMessage)

@@ -43,8 +43,8 @@ class Connector:
     def updateUser(self, userName, userdata):
         self.__dbSession.query(User_Data).filter_by(userName=userName).update(userdata)
         self.__dbSession.commit()
-        self.__dbSession.query(User_Login).filter_by(password=userdata.password).update(userdata.password)
-        self.__dbSession.commit()
+        # self.__dbSession.query(User_Login).filter_by(password=userdata.password).update(userdata.password)
+        # self.__dbSession.commit()
 
     # Playlist management
 
