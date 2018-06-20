@@ -4,8 +4,11 @@ import json
 
 class AlbumTestCase(unittest.TestCase):
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez', 'age': 34}
-        requests.post('http://localhost:8080/apiv1/artist/JoseYYY', data=postData)
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        requests.put('http://localhost:8080/apiv1/user', json=jsonData)
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
@@ -24,7 +27,7 @@ class AlbumTestCase(unittest.TestCase):
 
     def tearDown(self):
         jsonData = {'albumName': 'AlbumX'}
-        requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
+        requests.delete('http://localhost:8080/apiv1/user/JoseYYY')
         requests.delete('http://localhost:8080/apiv1/album', json = jsonData)
 
 
