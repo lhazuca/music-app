@@ -39,7 +39,11 @@ class Connector:
         return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
 
     def addPlaylist(self, playlistName, userName, description):
-        self.__dbSession.add(Playlist(playlistName=playlistName, userName=userName, description=description))
+        newPlaylistData = Playlist(playlistName=playlistName, description=description)
+        newPlaylistUserData = PlaylistUser(playlistName=playlistName, userName=userName)
+        self.__dbSession.add(newPlaylistData)
+        self.__dbSession.commit()
+        self.__dbSession.add(newPlaylistUserData)
         self.__dbSession.commit()
 
     def deletePlaylist(self, playlistName):
