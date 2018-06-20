@@ -16,8 +16,5 @@ class UserTestCase(unittest.TestCase):
         self.assertEqual(addUserReq.reason, 'OK')
         self.assertEqual(addUserReq.text, 'User Created')
 
-    # def test_getUserByUserName(self):
-    #     postData =
-
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/user/JoseYYY')

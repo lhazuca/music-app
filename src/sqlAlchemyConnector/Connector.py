@@ -36,30 +36,20 @@ class Connector:
         else:
             return 'Username not found'
 
-    # def deleteUser(self, userName):
-    #     user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
-    #     if user is not None:
-    #         self.__dbSession.delete(user)
-    #         self.__dbSession.commit()
-    #     else:
-    #         return 'Username not found'
-
     def deleteUser(self, userName):
         self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
         self.__dbSession.commit()
 
-    def getPlaylist(self, playlistName):
-        return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
-
-    # def updateUserCredentials(self, userName, password):
-    #     self.__dbSession.query(User_Login).filter_by(userName=userName).update(password)
-    #     self.__dbSession.commit()
+    def updateUser(self, userName, userdata):
+        self.__dbSession.query(User_Data).filter_by(userName=userName).update(userdata)
+        self.__dbSession.commit()
+        self.__dbSession.query(User_Login).filter_by(password=userdata.password).update(userdata.password)
+        self.__dbSession.commit()
 
     # Playlist management
 
-    def updateUser(self, userName, data):
-        self.__dbSession.query(User_Data).filter_by(userName=userName).update(data)
-        self.__dbSession.commit()
+    def getPlaylist(self, playlistName):
+        return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
 
     def addPlaylist(self, playlistName, userName, description):
         self.__dbSession.add(Playlist(playlistName=playlistName, userName=userName, description=description))

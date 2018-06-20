@@ -6,7 +6,6 @@ from src.requestHandler.AudioFileHandler import AudioFileHandler
 from src.requestHandler.PlaylistHandler import PlaylistHandler
 from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.UserHandler import UserHandler
-from src.requestHandler.UserLoginHandler import UserLoginHandler
 from src.requestHandler.UserSearchHandler import UserSearchHandler
 
 
@@ -16,7 +15,6 @@ class Application(tornado.web.Application):
         handlers = [
         (r"/", RootHandler),
         (r"/apiv1/user/(.*)", UserHandler),
-        # (r"/apiv1/user/(.*)", UserLoginHandler),
         (r"/apiv1/user", UserSearchHandler),
         (r"/apiv1/playlist", PlaylistHandler),
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
