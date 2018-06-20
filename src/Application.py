@@ -14,7 +14,8 @@ class Application(tornado.web.Application):
         handlers = [
         (r"/", RootHandler),
         (r"/apiv1/artist/(.*)", ArtistHandler),
-        (r"/apiv1/playlist", PlaylistHandler),
+        (r"/apiv1/playlist", PlaylistSearchHandler),
+        (r"/apiv1/playlist/(.*)", PlaylistHandler),
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
         (r"/apiv1/user", UserHandler),
         (r"/apiv1/album", AlbumHandler)
