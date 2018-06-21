@@ -11,7 +11,7 @@
  |Arreglar los user con la base de  datos|Tomy|3|SI|
  |Normalizar los endpoints de albums|Luca|3|SI|  
  |Arreglar los albums con la base de  datos|Luca|3|SI|
- |Crear los tests en postman|Matias|7|NO|
+ |Crear los tests en postman|Matias|7|SI|
  |Crear el script de tests|Matias|2|SI|
  |Crear usuario para DB en Travis|Matias|2|SI|
  |TOTAL||36|||
