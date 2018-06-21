@@ -16,8 +16,8 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
         (r"/", RootHandler),
-        (r"/apiv1/playlist", PlaylistSearchHandler),
-        (r"/apiv1/playlist/(.*)", PlaylistHandler),
+        (r"/apiv1/playlists", PlaylistSearchHandler),
+        (r"/apiv1/playlists/(.*)", PlaylistHandler),
         (r"/apiv1/users/(.*)", UserHandler),
         (r"/apiv1/users", UserSearchHandler),
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
