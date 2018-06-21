@@ -11,7 +11,7 @@ class PlaylistTestCase(unittest.TestCase):
                     'age': 34,
                     'userName':'JoseYYY',
                     'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/user', json=jsonDataUser)
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonDataUser)
 
         self.assertEqual(addUserReq.status_code, 200)
         self.assertEqual(addUserReq.reason, 'OK')
@@ -44,7 +44,7 @@ class PlaylistTestCase(unittest.TestCase):
         jsonDataPlaylist = {'playlistName': 'Rock Classics'}
         requests.delete('http://localhost:8080/apiv1/playlist', json=jsonDataPlaylist)
 
-        requests.delete('http://localhost:8080/apiv1/user/JoseYYY')
+        requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
 
         requests.delete('http://localhost:8080/apiv1/audiofile/Rock baby')
         requests.delete('http://localhost:8080/apiv1/audiofile/All night')
