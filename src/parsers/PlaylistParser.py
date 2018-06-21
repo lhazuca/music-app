@@ -7,5 +7,4 @@ def getPlaylistLikeNameParser(playlists):
                        for playlist in playlists])
 
 def getPlaylistParser(playlist):
-    return json.dumps({'playlist': {'playlistName': playlist.playlistName,
-    'userName': playlist.userName, 'description': playlist.description}})
+    return json.dumps({'playlist': {'playlistName': playlist.playlistName, 'description': playlist.description}})

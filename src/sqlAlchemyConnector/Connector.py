@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from src.models.models import *
 from src.parsers.ArtistParser import getArtistParser
 from src.parsers.PlaylistParser import getPlaylistLikeNameParser
+from src.parsers.PlaylistParser import getPlaylistParser
 from src.parsers.AudioFileParser import getAudioFileParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
 
@@ -47,15 +48,19 @@ class Connector:
         self.__dbSession.add(newPlaylistUserData)
         self.__dbSession.commit()
 
+    def getPlaylist(self, playlistName):
+        return getPlaylistParser(self.__dbSession.query(Playlist).
+                                 filter(Playlist.playlistName.__eq__(playlistName)).first())
+
+    def updatePlaylist(self, playlistName, data):
+        self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).update(data)
+        self.__dbSession.commit()
+
     def deletePlaylist(self, playlistName):
         playlistToBeDeleted = self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first()
         if (playlistToBeDeleted != None):
             self.__dbSession.delete(playlistToBeDeleted)
             self.__dbSession.commit()
-
-    # def addPlaylistAudioFile(self, audioFile, playlistName):
-    #     self.__dbSession.add(AudioFileByPlaylist(playlistName=playlistName, audioFile=audioFile))
-    #     self.__dbSession.commit()
 
     # Artist Audio File management
 
