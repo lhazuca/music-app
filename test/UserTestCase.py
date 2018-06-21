@@ -12,7 +12,7 @@ class UserTestCase(unittest.TestCase):
                     'lastName': 'Perez',
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/user', json=jsonData)
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
         self.assertEqual(addUserReq.status_code, 200)
         self.assertEqual(addUserReq.reason, 'OK')
@@ -23,9 +23,9 @@ class UserTestCase(unittest.TestCase):
                     'lastName': 'Perez',
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/user', json=jsonData)
+        requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
-        getUserReq = requests.get('http://localhost:8080/apiv1/user/JoseYYY')
+        getUserReq = requests.get('http://localhost:8080/apiv1/users/JoseYYY')
 
         self.assertEqual(getUserReq.status_code, 200)
         self.assertEqual(getUserReq.reason, 'OK')
@@ -35,7 +35,7 @@ class UserTestCase(unittest.TestCase):
 
 
     def test_getNonExistentUserByUserName(self):
-        getUserReq = requests.get('http://localhost:8080/apiv1/user/JoseYYY')
+        getUserReq = requests.get('http://localhost:8080/apiv1/users/JoseYYY')
 
         self.assertEqual(getUserReq.status_code, 200)
         self.assertEqual(getUserReq.reason, 'OK')
@@ -46,17 +46,17 @@ class UserTestCase(unittest.TestCase):
                     'lastName': 'Perez',
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/user', json=jsonData)
+        requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
         jsonUpdate = {'name': 'Pepe'}
-        updateUserReq = requests.put('http://localhost:8080/apiv1/user/JoseYYY',json=jsonUpdate)
+        updateUserReq = requests.put('http://localhost:8080/apiv1/users/JoseYYY',json=jsonUpdate)
 
         self.assertEqual(updateUserReq.status_code, 200)
         self.assertEqual(updateUserReq.reason, 'OK')
 
-        getUserReq = requests.get('http://localhost:8080/apiv1/user/JoseYYY')
+        getUserReq = requests.get('http://localhost:8080/apiv1/users/JoseYYY')
         updateResponse = json.loads(getUserReq.text, object_hook=lambda d: namedtuple('User', d.keys())(*d.values()))
         self.assertEqual('Pepe', updateResponse.user.name)
 
     def tearDown(self):
-        requests.delete('http://localhost:8080/apiv1/user/JoseYYY')
+        requests.delete('http://localhost:8080/apiv1/users/JoseYYY')

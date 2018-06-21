@@ -76,3 +76,9 @@ class DatabaseConnector:
 
     def deleteAlbum(self, albumName):
         return self.__connector.deleteAlbum(albumName)
+
+    def getAlbum(self,albumId):
+        return self.__connector.getAlbum(albumId)
+
+    def updateAlbum(self,albumId,data):
+        return self.__connector.updateAlbum(albumId,data)

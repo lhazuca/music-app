@@ -5,9 +5,9 @@ from src.models.models import *
 from src.parsers.PlaylistParser import getPlaylistLikeNameParser
 from src.parsers.UserParser import getUserParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
+from src.parsers.AlbumParser import getAlbumParser
 from src.parsers.AudioFileParser import getAudioFileParser
 from src.parsers.PlaylistParser import getPlaylistParser
-
 
 class Connector:
 
@@ -111,7 +111,7 @@ class Connector:
 
     def addAlbum(self, albumName, albumYear, albumOwner):
         newAlbumData = Album(albumName=albumName,albumYear=albumYear)
-        newAlbumUserData= AlbumUser(albumName=albumName,ownerName=albumOwner)
+        newAlbumUserData= AlbumUser(albumName=albumName,userName=albumOwner)
         self.__dbSession.add(newAlbumData)
         self.__dbSession.commit()
         self.__dbSession.add(newAlbumUserData)
@@ -122,4 +122,11 @@ class Connector:
         if(itemToBeDeleted != None):
             self.__dbSession.delete(itemToBeDeleted)
             self.__dbSession.commit()
+
+    def getAlbum(self, albumId):
+        return getAlbumParser(self.__dbSession.query(Album).filter(Album.albumName.__eq__(albumId)).first())
+
+    def updateAlbum(self, albumId, data):
+        self.__dbSession.query(Album).filter_by(albumName=albumId).update(data)
+        self.__dbSession.commit()
 
