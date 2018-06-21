@@ -11,7 +11,12 @@ class PlaylistTestCase(unittest.TestCase):
                     'age': 34,
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
-        addUserReq = requests.post('http://localhost:8080/apiv1/user/create', json=jsonData)
+
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonDataUser)
+
+        self.assertEqual(addUserReq.status_code, 200)
+        self.assertEqual(addUserReq.reason, 'OK')
+        self.assertEqual(addUserReq.text, 'User Created')
 
         jsonDataSong1 = {'isAudioFile': True, 'filename': 'Rock baby'}
         jsonDataSong2 = {'isAudioFile': True, 'filename': 'All night'}
@@ -43,11 +48,6 @@ class PlaylistTestCase(unittest.TestCase):
         self.delete();
 
     def delete(self):
-        requests.delete('http://localhost:8080/apiv1/user/rm/JoseYYY')
-        # deletePlaylist = requests.delete('http://localhost:8080/apiv1/playlist/rm/Rock Classics')
-        # requests.delete('http://localhost:8080/apiv1/audiofile/Rock baby')
-        # requests.delete('http://localhost:8080/apiv1/audiofile/All night')
-
-
+        requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
 if __name__ == '__main__':
     unittest.main()
