@@ -34,7 +34,6 @@ class TrackTestCase(unittest.TestCase):
 
     def test_get_Nonexistent_track_by_id(self):
         getTrackReq = requests.get('http://localhost:8080/apiv1/track/Tema 2')
-
         self.assertEqual(getTrackReq.status_code, 200)
         self.assertEqual(getTrackReq.reason, 'OK')
         self.assertTrue(getTrackReq.content, 'No id was found')
