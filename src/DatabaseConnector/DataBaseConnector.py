@@ -42,11 +42,11 @@ class DatabaseConnector:
     def deletePlaylist(self, playlistName):
         return self.__connector.deletePlaylist(playlistName)
 
-    def getPlaylist(self, playlistName):
-        return self.__connector.getPlaylist(playlistName)
-
-    def addPlaylistAudioFile(self, audioFile, playlistName):
-        return self.__connector.addPlaylistAudioFile(audioFile, playlistName)
+    # def getPlaylist(self, playlistName):
+    #     return self.__connector.getPlaylist(playlistName)
+    #
+    # def addPlaylistAudioFile(self, audioFile, playlistName):
+    #     return self.__connector.addPlaylistAudioFile(audioFile, playlistName)
 
     # Artist File management methods
 

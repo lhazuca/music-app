@@ -4,6 +4,7 @@ from src.requestHandler.AlbumHandler import AlbumHandler
 from src.requestHandler.ArtistHandler import ArtistHandler
 from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.PlaylistHandler import PlaylistHandler
+from src.requestHandler.PlaylistSearchHandler import PlaylistSearchHandler
 from src.requestHandler.AudioFileHandler import AudioFileHandler
 from src.requestHandler.UserHandler import UserHandler
 
