@@ -8,7 +8,6 @@ from src.requestHandler.TrackSearchHandler import TrackSearchHandler
 from src.requestHandler.RootHandler import RootHandler
 from src.requestHandler.PlaylistHandler import PlaylistHandler
 from src.requestHandler.PlaylistSearchHandler import PlaylistSearchHandler
-from src.requestHandler.AudioFileHandler import AudioFileHandler
 from src.requestHandler.UserHandler import UserHandler
 from src.requestHandler.UserSearchHandler import UserSearchHandler
 
