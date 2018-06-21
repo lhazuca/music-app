@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from src.models.models import *
+from src.parsers.PlaylistParser import getPlaylistLikeNameParser
 from src.parsers.UserParser import getUserParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
 from src.parsers.AlbumParser import getAlbumParser
@@ -52,28 +53,39 @@ class Connector:
 
     # Playlist management
 
-    def getPlaylist(self, playlistName):
-        return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
+    def getPlaylistLikeName(self, playlistName):
+        return getPlaylistLikeNameParser(
+                self.__dbSession.query(Playlist).filter(Playlist.playlistName.like("%" + playlistName + "%")).all())
 
     def addPlaylist(self, playlistName, userName, description):
-        self.__dbSession.add(Playlist(playlistName=playlistName, userName=userName, description=description))
+        newPlaylistData = Playlist(playlistName=playlistName, description=description)
+        newPlaylistUserData = PlaylistUser(playlistName=playlistName, userName=userName)
+        self.__dbSession.add(newPlaylistData)
+        self.__dbSession.commit()
+        self.__dbSession.add(newPlaylistUserData)
+        self.__dbSession.commit()
+
+    def getPlaylist(self, playlistName):
+        return getPlaylistParser(self.__dbSession.query(Playlist).
+                                 filter(Playlist.playlistName.__eq__(playlistName)).first())
+
+    def updatePlaylist(self, playlistName, data):
+        self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).update(data)
         self.__dbSession.commit()
 
     def deletePlaylist(self, playlistName):
-        self.__dbSession.delete(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
-        self.__dbSession.commit()
+        playlistToBeDeleted = self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first()
+        if (playlistToBeDeleted != None):
+            self.__dbSession.delete(playlistToBeDeleted)
+            self.__dbSession.commit()
 
-    def addPlaylistAudioFile(self, audioFile, playlistName):
-        self.__dbSession.add(AudioFileByPlaylist(playlistName=playlistName, audioFile=audioFile))
-        self.__dbSession.commit()
+    # Artist Audio File management
 
     def addArtistAudioFile(self, fileName, isAudioFile, artist):
         self.__dbSession.add(AudioFile(filename=fileName, isAudioFile=isAudioFile))
         self.__dbSession.commit()
         self.__dbSession.add(AudioFileByArtist(stageName=artist, filename=fileName))
         self.__dbSession.commit()
-
-    # Artist Audio File management
 
     def deleteArtistAudioFile(self, filename, artist):
         self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename))
