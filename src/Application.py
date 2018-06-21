@@ -19,7 +19,6 @@ class Application(tornado.web.Application):
         (r"/apiv1/user", UserSearchHandler),
         (r"/apiv1/playlist", PlaylistHandler),
         (r"/apiv1/audiofile/(.*)", AudioFileHandler),
-        (r"/apiv1/user", UserHandler),
         (r"/apiv1/album/(.*)", AlbumHandler),
         (r"/apiv1/album", AlbumSearchHandler)
 
