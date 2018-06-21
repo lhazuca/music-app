@@ -4,32 +4,23 @@ import json
 
 class PlaylistHandler(tornado.web.RequestHandler):
 
-    def get(self,playlistName):
+    def get(self):
         statusCode = 400
         statusMessage = 'Bad request'
         try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            playlistName = data['playlistName']
             statusCode = 200
-            statusMessage = self.application.db.getPlaylistWithSubString(playlistName)
+            statusMessage = self.application.db.getPlaylist(playlistName)
         except Exception as e:
-            raise e
+            raise (e)
             statusCode = 400
-            statusMessage = "Not match playlists"
-        self.set_status(statusCode)
-        self.write(statusMessage)
-
-    def delete(self,playlistName):
-        statusCode = 200
-        statusMessage = 'Playlist deleted'
-        try:
-            self.application.db.deletePlaylist(playlistName)
-        except Exception as e:
-            raise e
-            statusCode = 400
-            statusMessage = "Playlist not deleted"
+            statusMessage = "Playlist not added"
         self.set_status(statusCode)
         self.write(statusMessage)
 
     def post(self):
+
         statusCode = 200
         statusMessage = 'Playlist added'
         try:
@@ -37,7 +28,6 @@ class PlaylistHandler(tornado.web.RequestHandler):
             playlistName = data['playlistName']
             userName = data['userName']
             description = data['description']
-            print(description)
             self.application.db.addPlaylist(playlistName, userName, description)
             songs = data['songs']
             for song in songs:
@@ -46,5 +36,19 @@ class PlaylistHandler(tornado.web.RequestHandler):
             raise e
             statusCode = 400
             statusMessage = "Playlist not added"
+        self.set_status(statusCode)
+        self.write(statusMessage)
+
+    def delete(self):
+        statusCode = 200
+        statusMessage = 'Playlist deleted'
+        try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            playlistName = data['playlistName']
+            self.application.db.deletePlaylist(playlistName)
+        except Exception as e:
+            raise e
+            statusCode = 400
+            statusMessage = "Playlist not deleted"
         self.set_status(statusCode)
         self.write(statusMessage)

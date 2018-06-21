@@ -22,7 +22,7 @@ class Application(tornado.web.Application):
         (r"/apiv1/users", UserSearchHandler),
         (r"/apiv1/playlist", PlaylistHandler),
         (r"/apiv1/track/(.*)", TrackHandler),
-        (r"/apiv1/track", TrackSearchHandler)
+        (r"/apiv1/track", TrackSearchHandler),
         (r"/apiv1/albums/(.*)", AlbumHandler),
         (r"/apiv1/albums", AlbumSearchHandler)
         ]

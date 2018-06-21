@@ -17,7 +17,7 @@ class TrackSearchHandler(tornado.web.RequestHandler) :
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def post(self):
+    def put(self):
         statusCode = 200
         statusMessage = 'Track added'
         try :

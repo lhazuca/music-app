@@ -8,22 +8,28 @@ import requests
 class TrackTestCase(unittest.TestCase):
 
     def test_addTrack_Tema1_by_JoseYYY(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez'}
-        postUser= requests.post('http://localhost:8080/apiv1/artist/JoseYYY', data=postData)
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
-        postData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
-        addTrackReq = requests.post('http://localhost:8080/apiv1/track', json=postData)
+        putData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
+        addTrackReq = requests.put('http://localhost:8080/apiv1/track', json=putData)
 
         self.assertEqual(200,addTrackReq .status_code)
         self.assertEqual('OK',addTrackReq .reason)
         self.assertEqual('Track added',addTrackReq .text)
 
     def test_get_existent_track_by_id(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez'}
-        postUser = requests.post('http://localhost:8080/apiv1/artist/JoseYYY', data=postData)
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
         postData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
-        addTrackReq = requests.post('http://localhost:8080/apiv1/track', json=postData)
+        addTrackReq = requests.put('http://localhost:8080/apiv1/track', json=postData)
 
         getTrackReq = requests.get('http://localhost:8080/apiv1/track/Tema 1')
 
@@ -39,17 +45,20 @@ class TrackTestCase(unittest.TestCase):
         self.assertTrue(getTrackReq.content, 'No id was found')
 
     def test_get_two_tracks_with_substring_Tema(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez'}
-        postUser = requests.post('http://localhost:8080/apiv1/artist/JoseYYY', data=postData)
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
-        postData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
-        addTrackReq = requests.post('http://localhost:8080/apiv1/track', json=postData)
+        putData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
+        addTrackReq = requests.put('http://localhost:8080/apiv1/track', json=putData)
 
-        postData2 = {'trackName': 'Tema 2', 'fileContent': 'contenido2', 'owner': 'JoseYYY'}
-        addTrackReq2 = requests.post('http://localhost:8080/apiv1/track', json=postData2)
+        putData2 = {'trackName': 'Tema 2', 'fileContent': 'contenido2', 'owner': 'JoseYYY'}
+        addTrackReq2 = requests.put('http://localhost:8080/apiv1/track', json=putData2)
 
-        postData3 = {'trackName': 'Musica 1', 'fileContent': 'contenido3', 'owner': 'JoseYYY'}
-        addTrackReq3 = requests.post('http://localhost:8080/apiv1/track', json=postData3)
+        putData3 = {'trackName': 'Musica 1', 'fileContent': 'contenido3', 'owner': 'JoseYYY'}
+        addTrackReq3 = requests.put('http://localhost:8080/apiv1/track', json=putData3)
 
         searchData = {'trackLikeName': 'Tema'}
         searchReq = requests.get('http://localhost:8080/apiv1/track',data = searchData)
@@ -63,11 +72,14 @@ class TrackTestCase(unittest.TestCase):
         requests.delete('http://localhost:8080/apiv1/track/Musica 1')
 
     def test_updateTrackWithNameTema1(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez'}
-        postUser = requests.post('http://localhost:8080/apiv1/artist/JoseYYY', data=postData)
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
-        postData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
-        addTrackReq = requests.post('http://localhost:8080/apiv1/track', json=postData)
+        putData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
+        addTrackReq = requests.put('http://localhost:8080/apiv1/track', json=putData)
 
         getTrackReq = requests.get('http://localhost:8080/apiv1/track/Tema 1')
 
@@ -85,7 +97,7 @@ class TrackTestCase(unittest.TestCase):
         self.assertEqual('nuevo contenido', secondAlbumResponse.track.fileContent)
 
     def tearDown(self):
-        requests.delete('http://localhost:8080/apiv1/artist/JoseYYY')
+        requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
         requests.delete('http://localhost:8080/apiv1/track/Tema 1')
 
 if __name__ == '__main__':
