@@ -20,8 +20,12 @@ class User_Login(Base):
 class Playlist(Base):
     __tablename__ = 'Playlist'
     playlistName = Column(String(50), primary_key=True)
-    userName = Column(String(40), ForeignKey('User_Data.userName', ondelete='CASCADE'), primary_key=True)
     description = Column(String(100))
+
+class PlaylistUser(Base):
+    __tablename__ = 'PlaylistUser'
+    playlistName = Column(String(50), ForeignKey('Playlist.playlistName', ondelete='CASCADE'), primary_key=True)
+    userName = Column(String(50), ForeignKey('User_Data.userName', ondelete='CASCADE'), primary_key=True)
 
 class AudioFileByPlaylist(Base):
     __tablename__ = "AudioFileByPlaylist"
