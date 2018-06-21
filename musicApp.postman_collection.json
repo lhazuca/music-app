@@ -1,0 +1,550 @@
+{
+	"info": {
+		"_postman_id": "f0203011-f4fa-4547-8921-88cb087d472d",
+		"name": "musicApp ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Albums",
+			"description": "",
+			"item": [
+				{
+					"name": "get album non exist Death Magnetic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfef0291-c25d-44b7-af69-bc87ccc0f8a5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/albums?album=DeathMagnetic",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"albums"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "DeathMagnetic"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all albums",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/albums",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add album Death Magnetic",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\" : \"Death Magnetic\",\n  \"year\": 2016,\n  \"owner\": \"Metallica\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/apiv1/albums",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get album Death Magnetic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfef0291-c25d-44b7-af69-bc87ccc0f8a5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/albums?album=DeathMagnetic",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"albums"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "DeathMagnetic"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete album Death Magnetic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfef0291-c25d-44b7-af69-bc87ccc0f8a5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/albums/DeathMagnetic",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"albums",
+								"DeathMagnetic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get album Death Magnetic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfef0291-c25d-44b7-af69-bc87ccc0f8a5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/albums?album=DeathMagnetic",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"albums"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "DeathMagnetic"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AudioFile",
+			"description": "",
+			"item": [
+				{
+					"name": "get track non exists Fuel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/tracks?name=Fuel",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Fuel"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all tracks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/tracks",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"tracks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add track Fuel",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Fuel\",\n\t\"file\": \"ReadThisFileBefore\",\n\t\"releaseYear\": 1997\n}\n"
+						},
+						"url": {
+							"raw": "localhost:8080/apiv1/tracks",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"tracks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get track Fuel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/tracks?name=Fuel",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Fuel"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete track Fuel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/tracks/Fuel",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"tracks",
+								"Fuel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get track non exists Fuel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/tracks?name=Fuel",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Fuel"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Playlist",
+			"description": "",
+			"item": [
+				{
+					"name": "get playlist non exists myPlaylist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/playlists?name=myPlaylist",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"playlists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "myPlaylist"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all playlists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/playlists",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add playlist miPlaylist",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"myPlaylist\",\n\t\"userName\":\"pepe\",\n\t\"description\": \"heavy metal and rock\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/apiv1/playlists",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get playlist myPlaylist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/playlists?name=myPlaylist",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"playlists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "myPlaylist"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete playlist myPlaylist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/playlists/myPlaylist",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"playlists",
+								"myPlaylist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get playlist myPlaylist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/apiv1/playlists?name=myPlaylist",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"playlists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "myPlaylist"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"description": "",
+			"item": [
+				{
+					"name": "register user pepePerez",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userName\": \"pepePerez\",\n\t\"name\":\"Jose\",\n\t\"lastName\": \"Perez\",\n\t\"password\":\"MyPass1234\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/apiv1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiv1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
