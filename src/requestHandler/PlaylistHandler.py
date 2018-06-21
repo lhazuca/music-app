@@ -4,11 +4,11 @@ import json
 
 class PlaylistHandler(tornado.web.RequestHandler):
 
-    def get(self, playlistId):
+    def get(self, playlistName):
         statusCode = 200
         statusMessage = ''
         try:
-            statusMessage = self.application.db.getPlaylist(playlistId)
+            statusMessage = self.application.db.getPlaylist(playlistName)
         except Exception as e:
             raise e
             statusCode = 400
@@ -16,12 +16,12 @@ class PlaylistHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def put(self, playlistId):
+    def put(self, playlistName):
         statusCode = 200
         statusMessage = 'Playlist updated'
         try:
             data = json.loads(self.request.body.decode('utf-8'))
-            self.application.db.updatePlaylist(playlistId, data)
+            self.application.db.updatePlaylist(playlistName, data)
         except Exception as e:
             raise e
             statusMessage = 'Playlist not updated'
@@ -29,11 +29,11 @@ class PlaylistHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def delete(self, playlistId):
+    def delete(self, playlistName):
         statusCode = 200
         statusMessage = 'Playlist deleted'
         try:
-            self.application.db.deletePlaylist(playlistId)
+            self.application.db.deletePlaylist(playlistName)
         except Exception as e:
             raise e
             statusMessage = 'Playlist not deleted'

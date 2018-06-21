@@ -1,51 +1,31 @@
 import unittest
 import requests
+import json
 
 
 class PlaylistTestCase(unittest.TestCase):
 
-    def test_addPlaylist_RockClassics_JoseYYY_OldRockClassics(self):
-
-        jsonDataUser = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'age': 34,
-                    'userName':'JoseYYY',
-                    'password': 'Clave1234._5'}
-        addUserReq = requests.post('http://localhost:8080/apiv1/user', json=jsonDataUser)
-
-        self.assertEqual(addUserReq.status_code, 200)
-        self.assertEqual(addUserReq.reason, 'OK')
-        self.assertEqual(addUserReq.text, 'User Created')
-
-        jsonDataSong1 = {'isAudioFile': True, 'filename': 'Rock baby'}
-        jsonDataSong2 = {'isAudioFile': True, 'filename': 'All night'}
-        addAudioFileReq1 = requests.post('http://localhost:8080/apiv1/audiofile/Rock baby', data=jsonDataSong1)
-        addAudioFileReq2 = requests.post('http://localhost:8080/apiv1/audiofile/All night', data=jsonDataSong2)
-
-        self.assertEqual(addAudioFileReq1.status_code, 200)
-        self.assertEqual(addAudioFileReq1.reason, 'OK')
-        self.assertEqual(addAudioFileReq1.text, 'Audio file added')
-
-        self.assertEqual(addAudioFileReq2.status_code, 200)
-        self.assertEqual(addAudioFileReq2.reason, 'OK')
-        self.assertEqual(addAudioFileReq2.text, 'Audio file added')
-
-        jsonDataPlaylist = {'playlistName': 'Rock Classics',
-                    'userName': 'JoseYYY',
-                    'description': 'Old rock classics',
-                    'songs': ['Rock baby', 'All night']}
-        addPlaylistReq = requests.post('http://localhost:8080/apiv1/playlist', json=jsonDataPlaylist)
-
+    def test_addPlaylist_RockClassics_to_user_Max01(self):
+        postData = {'name': 'Max', 'lastName': 'Johnson', 'age': 27}
+        requests.post('http://localhost:8080/apiv1/artist/Max01', data=postData)
+        playlistJsonData = {'playlistName': 'RockClassics',
+                         'userName': 'Max01',
+                         'description': 'Good old rock classics'}
+        addPlaylistReq = requests.put('http://localhost:8080/apiv1/playlist', json=playlistJsonData)
         self.assertEqual(addPlaylistReq.status_code, 200)
         self.assertEqual(addPlaylistReq.reason, 'OK')
         self.assertEqual(addPlaylistReq.text, 'Playlist added')
 
+    def test_get_Nonexistent_Playlist(self):
+        getData = {'playlistLikeName': 'something'}
+        getPlaylistReq = requests.get('http://localhost:8080/apiv1/playlist', data=getData)
+        self.assertEqual(getPlaylistReq.status_code, 200)
+        self.assertEqual(getPlaylistReq.reason, 'OK')
+        jsonResponse = json.loads(getPlaylistReq.text)
+        self.assertEqual(len(jsonResponse), 0)
+
     def tearDown(self):
-        jsonDataPlaylist = {'playlistName': 'Rock Classics'}
-        requests.delete('http://localhost:8080/apiv1/playlist', json=jsonDataPlaylist)
+        jsonData = {'playlistName': 'RockClassics'}
+        requests.delete('http://localhost:8080/apiv1/artist/Max01')
+        requests.delete('http://localhost:8080/apiv1/playlist/RockClassics')
 
-        jsonDataUser = {'userName':'JoseYYY'}
-        requests.delete('http://localhost:8080/apiv1/user',json=jsonDataUser)
-
-        requests.delete('http://localhost:8080/apiv1/audiofile/Rock baby')
-        requests.delete('http://localhost:8080/apiv1/audiofile/All night')
