@@ -20,8 +20,8 @@ class PlaylistTestCase(unittest.TestCase):
 
         jsonDataSong1 = {'trackName': 'Rock baby', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
         jsonDataSong2 = {'trackName': 'All night', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
-        addAudioFileReq1 = requests.put('http://localhost:8080/apiv1/track', json=jsonDataSong1)
-        addAudioFileReq2 = requests.put('http://localhost:8080/apiv1/track', json=jsonDataSong2)
+        addAudioFileReq1 = requests.put('http://localhost:8080/apiv1/tracks', json=jsonDataSong1)
+        addAudioFileReq2 = requests.put('http://localhost:8080/apiv1/tracks', json=jsonDataSong2)
 
         self.assertEqual(addAudioFileReq1.status_code, 200)
         self.assertEqual(addAudioFileReq1.reason, 'OK')
@@ -47,5 +47,5 @@ class PlaylistTestCase(unittest.TestCase):
 
         requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
 
-        requests.delete('http://localhost:8080/apiv1/track/Rock baby')
-        requests.delete('http://localhost:8080/apiv1/track/All night')
+        requests.delete('http://localhost:8080/apiv1/tracks/Rock baby')
+        requests.delete('http://localhost:8080/apiv1/tracks/All night')
