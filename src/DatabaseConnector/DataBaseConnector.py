@@ -33,8 +33,11 @@ class DatabaseConnector:
 
     # Playlist management methods
 
+    def getPlaylistLikeName(self, playlistName):
+        return self.__connector.getPlaylistLikeName(playlistName)
+
     def addPlaylist(self, playlistName, userName, description):
-        return self.__connector.addPlaylist(playlistName, userName, description)
+        self.__connector.addPlaylist(playlistName, userName, description)
 
     def deletePlaylist(self, playlistName):
         return self.__connector.deletePlaylist(playlistName)

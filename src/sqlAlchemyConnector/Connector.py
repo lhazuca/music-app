@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from src.models.models import *
 from src.parsers.ArtistParser import getArtistParser
-from src.parsers.PlaylistParser import getPlaylistParser
+from src.parsers.PlaylistParser import getPlaylistLikeNameParser
 from src.parsers.AudioFileParser import getAudioFileParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
 
@@ -35,8 +35,9 @@ class Connector:
 
     # Playlist management
 
-    def getPlaylist(self, playlistName):
-        return getPlaylistParser(self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).first())
+    def getPlaylistLikeName(self, playlistName):
+        return getPlaylistLikeNameParser(
+                self.__dbSession.query(Playlist).filter(Playlist.playlistName.like("%" + playlistName + "%")).all())
 
     def addPlaylist(self, playlistName, userName, description):
         newPlaylistData = Playlist(playlistName=playlistName, description=description)
