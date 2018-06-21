@@ -2,11 +2,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from src.models.models import *
-from src.parsers.ArtistParser import getArtistParser
 from src.parsers.PlaylistParser import getPlaylistLikeNameParser
-from src.parsers.PlaylistParser import getPlaylistParser
-from src.parsers.AudioFileParser import getAudioFileParser
+from src.parsers.UserParser import getUserParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
+from src.parsers.AudioFileParser import getAudioFileParser
+from src.parsers.PlaylistParser import getPlaylistParser
+
 
 class Connector:
 
@@ -18,21 +19,37 @@ class Connector:
         self.__session.configure(bind=self.__engine)
         self.__dbSession = self.__session()
 
+    # User management
 
-    # Artist management
+    def addUser(self,userName,password, name, lastName):
+        newUserData = User_Data(userName=userName, name=name, lastName=lastName)
+        newUserLogin = User_Login(userName=userName, password=password)
 
-    def addArtist(self, stageName, name, lastName, age):
-        self.__dbSession.add(Artist(stageName=stageName, name=name, lastName=lastName, age=age))
+        self.__dbSession.add(newUserData)
+        self.__dbSession.commit()
+        self.__dbSession.add(newUserLogin)
         self.__dbSession.commit()
 
-    def getArtist(self, stageName):
-        return getArtistParser(self.__dbSession.query(Artist).filter_by(stageName=stageName).first())
+    def getUser(self, userName):
+        user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
+        if user is not None:
+            return getUserParser(user)
+        else:
+            return 'Username not found'
 
-    def deleteArtist(self, stageName):
-        first = self.__dbSession.query(Artist).filter_by(stageName=stageName).first()
-        if(first != None):
-            self.__dbSession.delete(first)
+    def deleteUser(self, userName):
+        user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
+        if user is not None:
+            self.__dbSession.delete(user)
             self.__dbSession.commit()
+        else:
+            'User does not exists'
+
+    def updateUser(self, userName, userdata):
+        self.__dbSession.query(User_Data).filter_by(userName=userName).update(userdata)
+        self.__dbSession.commit()
+        # self.__dbSession.query(User_Login).filter_by(password=userdata.password).update(userdata.password)
+        # self.__dbSession.commit()
 
     # Playlist management
 
@@ -87,22 +104,10 @@ class Connector:
         self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename).first())
         self.__dbSession.commit()
 
-    # User management
+    # Album managment
 
-    def addUser(self,userName,password, name, lastName, age):
-        newUserData = User_Data(userName=userName, name=name, lastName = lastName, age=age)
-        newUserLogin = User_Login(userName=userName, password=password)
-
-        self.__dbSession.add(newUserData)
-        self.__dbSession.commit()
-        self.__dbSession.add(newUserLogin)
-        self.__dbSession.commit()
-
-    def deleteUser(self, userName):
-
-        self.__dbSession.delete(self.__dbSession.query(User_Data).filter_by(userName=userName).first())
-        self.__dbSession.commit()
-
+    def getAlbumLikeName(self,albumName):
+        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.albumName.like("%"+albumName+"%")).all())
 
     def addAlbum(self, albumName, albumYear, albumOwner):
         newAlbumData = Album(albumName=albumName,albumYear=albumYear)
@@ -111,11 +116,6 @@ class Connector:
         self.__dbSession.commit()
         self.__dbSession.add(newAlbumUserData)
         self.__dbSession.commit()
-
-    # Album managment
-
-    def getAlbumLikeName(self,albumName):
-        return getAlbumLikeNameParser(self.__dbSession.query(Album).filter(Album.albumName.like("%"+albumName+"%")).all())
 
     def deleteAlbum(self, albumName):
         itemToBeDeleted = self.__dbSession.query(Album).filter_by(albumName=albumName).first()
