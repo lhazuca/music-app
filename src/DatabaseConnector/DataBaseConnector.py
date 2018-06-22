@@ -49,6 +49,9 @@ class DatabaseConnector:
     def deletePlaylist(self, playlistName):
         self.__connector.deletePlaylist(playlistName)
 
+    def getPlaylistWithSubString(self,subString):
+        return self.__connector.getPlaylistWithSubString(subString)
+
     # Artist File management methods
 
     def addArtistAudioFile(self, fileName, isAudioFile, artist):
@@ -57,17 +60,23 @@ class DatabaseConnector:
     def deleteArtistAudioFile(self, filename, artist):
         return self.__connector.deleteArtistAudioFile(filename, artist)
 
-    def addAudioFile(self, fileName, isAudioFile):
-        return self.__connector.addAudioFile(fileName, isAudioFile)
+    #Track methods
+    def addTrack(self, owner, trackName, fileContent):
+        return self.__connector.addTrack(owner,trackName, fileContent)
 
-    def deleteAudioFile(self, filename):
-        return self.__connector.deleteAudioFile(filename)
+    def deleteTrack(self, trackId):
+        return self.__connector.deleteTrack(trackId)
 
-    def getAudioFile(self, filename):
-        return self.__connector.getAudioFile(filename)
+    def getTrack(self,trackName):
+        return self.__connector.getTrack(trackName)
+
+    def getTrackLikeName(self,trackName):
+        return self.__connector.getTrackLikeName(trackName)
+
+    def updateTrack(self,trackId, data):
+        return self.__connector.updateTrack(trackId,data)
 
     # Album methods
-
     def addAlbum(self, albumName, albumYear, albumOwner):
         self.__connector.addAlbum(albumName, albumYear, albumOwner)
 

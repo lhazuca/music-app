@@ -2,11 +2,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from src.models.models import *
+from src.parsers.TrackParse import getTrackLikeNameParser
+from src.parsers.TrackParse import getTrackParser
+from src.parsers.UserParse import getUserParse
 from src.parsers.PlaylistParser import getPlaylistLikeNameParser
 from src.parsers.UserParser import getUserParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
 from src.parsers.AlbumParser import getAlbumParser
-from src.parsers.AudioFileParser import getAudioFileParser
 from src.parsers.PlaylistParser import getPlaylistParser
 
 class Connector:
@@ -36,7 +38,6 @@ class Connector:
             return getUserParser(user)
         else:
             return 'Username not found'
-
     def deleteUser(self, userName):
         user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
         if user is not None:
@@ -78,30 +79,34 @@ class Connector:
         if (playlistToBeDeleted != None):
             self.__dbSession.delete(playlistToBeDeleted)
             self.__dbSession.commit()
+            
+   #Track methods
 
-    # Artist Audio File management
-
-    def addArtistAudioFile(self, fileName, isAudioFile, artist):
-        self.__dbSession.add(AudioFile(filename=fileName, isAudioFile=isAudioFile))
+    def addTrack(self, owner,trackName, fileContent):
+        self.__dbSession.add(Track(trackName=trackName, fileContent=fileContent))
         self.__dbSession.commit()
-        self.__dbSession.add(AudioFileByArtist(stageName=artist, filename=fileName))
-        self.__dbSession.commit()
-
-    def deleteArtistAudioFile(self, filename, artist):
-        self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename))
-        self.__dbSession.commit()
-        self.__dbSession.delete(self.__dbSession.query(AudioFileByArtist).filter_by(filename=filename, artist=artist))
+        self.__dbSession.add(UserTracks(userName=owner,trackName=trackName))
         self.__dbSession.commit()
 
-    def getAudioFile(self, fileName):
-        return getAudioFileParser(self.__dbSession.query(AudioFile).filter_by(filename=fileName).first())
+    def getTrackLikeName(self, trackName):
+        return getTrackLikeNameParser(
+            self.__dbSession.query(Track).filter(Track.trackName.like("%" + trackName + "%")).all())
 
-    def addAudioFile(self, filename, isAudioFile):
-        self.__dbSession.add(AudioFile(filename=filename, isAudioFile=isAudioFile))
-        self.__dbSession.commit()
+    def getTrack(self, trackName):
+        track = self.__dbSession.query(Track).filter_by(trackName=trackName).first()
+        if track is not None:
+            return getTrackParser(track)
+        else:
+            return 'No id was found'
 
-    def deleteAudioFile(self, filename):
-        self.__dbSession.delete(self.__dbSession.query(AudioFile).filter_by(filename=filename).first())
+    def deleteTrack(self, trackId):
+        itemToBeDeleted = self.__dbSession.query(Track).filter_by(trackName=trackId).first()
+        if itemToBeDeleted is not None:
+            self.__dbSession.delete(itemToBeDeleted)
+            self.__dbSession.commit()
+
+    def updateTrack(self, trackId, data):
+        self.__dbSession.query(Track).filter_by(trackName=trackId).update(data)
         self.__dbSession.commit()
 
     # Album managment
@@ -119,7 +124,7 @@ class Connector:
 
     def deleteAlbum(self, albumName):
         itemToBeDeleted = self.__dbSession.query(Album).filter_by(albumName=albumName).first()
-        if(itemToBeDeleted != None):
+        if (itemToBeDeleted != None):
             self.__dbSession.delete(itemToBeDeleted)
             self.__dbSession.commit()
 

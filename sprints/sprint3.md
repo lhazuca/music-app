@@ -3,8 +3,8 @@
 ## Backlog
  |UserStory|Lo Hace|User Story Points|Hecho|
  |---------|---------------|-------|-----|
- |Normalizar endpoints de tracks|Henry|5|NO|
- |Arreglar los tracks con la base de datos|Henry|5|NO|
+ |Normalizar endpoints de tracks|Henry|5|SI|
+ |Arreglar los tracks con la base de datos|Henry|5|SI|
  |Normalizar los endpoints de playlist |Brian|3|SI|
  |Arreglar playlist con la base de datos |Brian|3|SI|
  |Normalizar los endpoints de users|Tomy|3|SI|

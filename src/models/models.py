@@ -32,10 +32,17 @@ class AudioFileByPlaylist(Base):
     playlistName = Column(String(50), ForeignKey('Playlist.playlistName', ondelete='CASCADE'), primary_key=True)
     audioFile = Column(String(100), primary_key=True)
 
-class AudioFile(Base):
-    __tablename__ = 'AudioFile'
-    filename = Column(String(100), primary_key=True)
-    isAudioFile = Column(Boolean(False))
+class Track(Base):
+    __tablename__ = 'Track'
+    trackName = Column(String(100), primary_key=True)
+    fileContent = Column(String(100))
+    releaseDate = Column(DateTime, default=func.now())
+
+class UserTracks(Base):
+    __tablename__ = 'UserTracks'
+    userName = Column(String(40), ForeignKey('User_Data.userName',ondelete='CASCADE'),primary_key=True)
+    trackName = Column(String(100),ForeignKey('Track.trackName',ondelete='CASCADE'),primary_key=True)
+    uploaded = Column(DateTime, default=func.now())
 
 class Album(Base):
     __tablename__ = 'Album'

@@ -1,7 +1,6 @@
 import json
 import tornado.web
 
-
 class UserHandler(tornado.web.RequestHandler):
 
     # get
