@@ -20,7 +20,13 @@
 
 |PROPUESTO|HECHO|
 |---|---|
-|*36*|<span style="color:amarillo">*COMPLETAR*</span>
+|*36*|<span style="color:amarillo">*36*</span>
+
+
+## Retrospectiva
+
+  * Pudimos realizar todos los user stories propuestos.
+  * Establecimos la importancia de coordinar criterios antes de pasar a la implementación.
 
 ## Próximo sprint
 |UserStory|User Story Points|
