@@ -24,4 +24,4 @@
 
 |PROPUESTO|HECHO|
 |---|---|
-|*54*|<span style="color:amarillo">*COMPLETAR*</span>
+|*50*|<span style="color:amarillo">*COMPLETAR*</span>
