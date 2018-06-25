@@ -3,7 +3,7 @@
 ## Backlog
  |UserStory|Lo Hace|User Story Points|Hecho|
  |---------|---------------|-------|-----|
- |Como usuario quiero editar nombre y año de un album|?|1|NO|
+ |Como usuario quiero editar nombre y año de un album|LUCA|1|SI|
  |Como usuario quiero agregar un track a un album|?|3|NO|
  |Como usuario quiero eliminar un track de una album |?|5|NO|
  |Como usuario quiero agregar un track a una playlist |?|3|NO|

@@ -26,10 +26,12 @@ class AlbumTestCase(unittest.TestCase):
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 0)
 
-    @unittest.skip("hacer bien en sprint 4")
     def test_updateAlbumXData(self):
-        postData = {'name': 'Jose', 'lastName': 'Perez', 'age': 34}
-        requests.post('http://localhost:8080/apiv1/users/JoseYYY', data=postData)
+        postData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        requests.put('http://localhost:8080/apiv1/users', json=postData)
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
@@ -48,9 +50,8 @@ class AlbumTestCase(unittest.TestCase):
 
 
     def tearDown(self):
-        jsonData = {'albumName': 'AlbumX'}
-        requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
         requests.delete('http://localhost:8080/apiv1/albums/AlbumX')
+        requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
 
 
 
