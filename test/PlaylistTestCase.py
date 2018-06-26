@@ -68,6 +68,24 @@ class PlaylistTestCase(unittest.TestCase):
         updateResponse = json.loads(getPlaylistReq.text, object_hook=lambda d: namedtuple('Playlist', d.keys())(*d.values()))
         self.assertEqual('Rock songs from the 80', updateResponse.playlist.description)
 
+    def test_Get_All_Available_Playlists(self):
+
+        firstPlaylistJsonData = {'playlistName': 'classicrock',
+                            'userName': 'Max01',
+                            'description': 'Classic rock songs'}
+        requests.put('http://localhost:8080/apiv1/playlists', json=firstPlaylistJsonData)
+
+        secondPlaylistJsonData = {'playlistName': 'oldrocksongs',
+                                 'userName': 'Max01',
+                                 'description': 'Very old rock songs'}
+        requests.put('http://localhost:8080/apiv1/playlists', json=secondPlaylistJsonData)
+
+        getAllPlaylistsReq = requests.get('http://localhost:8080/apiv1/playlists')
+        self.assertEqual(getAllPlaylistsReq.status_code, 200)
+        self.assertEqual(getAllPlaylistsReq.reason, 'OK')
+        jsonResponse = json.loads(getAllPlaylistsReq.text)
+        self.assertEqual(len(jsonResponse),2)
+
     def tearDown(self):
         jsonData = {'playlistName': 'RockClassics'}
         requests.delete('http://localhost:8080/apiv1/users/Max01')

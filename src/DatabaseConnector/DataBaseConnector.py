@@ -37,6 +37,9 @@ class DatabaseConnector:
     def getPlaylistLikeName(self, playlistName):
         return self.__connector.getPlaylistLikeName(playlistName)
 
+    def getAllPlaylists(self):
+        return self.__connector.getAllPlaylists()
+
     def addPlaylist(self, playlistName, userName, description):
         self.__connector.addPlaylist(playlistName, userName, description)
 

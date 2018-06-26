@@ -70,6 +70,9 @@ class Connector:
         return getPlaylistParser(self.__dbSession.query(Playlist).
                                  filter(Playlist.playlistName.__eq__(playlistName)).first())
 
+    def getAllPlaylists(self):
+        return getPlaylistLikeNameParser(self.__dbSession.query(Playlist))
+
     def updatePlaylist(self, playlistName, data):
         self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).update(data)
         self.__dbSession.commit()
