@@ -11,7 +11,7 @@
  |Verificar que lo que se manda por el json es valido|?|5|NO|
  |Unificar respuestas de los json|?|2|NO|
  |Unificar nombres de las variables de las urls|?|3|NO|
- |Actualizar los passwords de usuarios|?|5|NO|
+ |Actualizar los passwords de usuarios|TOMAS|5|SI|
  |Requisito de estar logeado para usar un metodo|?|5|NO|
  |Implementar get general para track|?|3|NO|
  |Implementar get general para album|?|3|NO|
