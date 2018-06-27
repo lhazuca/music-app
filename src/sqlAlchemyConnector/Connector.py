@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from src.models.models import *
 from src.parsers.TrackParse import getTrackLikeNameParser
 from src.parsers.TrackParse import getTrackParser
-from src.parsers.UserParse import getUserParse
+from src.parsers.UserLoginParser import getUserLoginParser
 from src.parsers.PlaylistParser import getPlaylistLikeNameParser
 from src.parsers.UserParser import getUserParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
@@ -38,6 +38,15 @@ class Connector:
             return getUserParser(user)
         else:
             return 'Username not found'
+
+    def getUserLogin(self, userName):
+        user = self.__dbSession.query(User_Login).filter_by(userName=userName).first()
+        if user is not None:
+            return getUserLoginParser(user)
+        else:
+            return 'Username not found'
+
+
     def deleteUser(self, userName):
         user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
         if user is not None:
@@ -46,11 +55,13 @@ class Connector:
         else:
             'User does not exists'
 
-    def updateUser(self, userName, userdata):
+    def updateUserData(self, userName, userdata):
         self.__dbSession.query(User_Data).filter_by(userName=userName).update(userdata)
         self.__dbSession.commit()
-        # self.__dbSession.query(User_Login).filter_by(password=userdata.password).update(userdata.password)
-        # self.__dbSession.commit()
+
+    def updateUserCredentials(self, userName, password):
+        self.__dbSession.query(User_Login).filter_by(userName=userName).update(password)
+        self.__dbSession.commit()
 
     # Playlist management
 
