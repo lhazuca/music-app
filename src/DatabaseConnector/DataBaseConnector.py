@@ -94,3 +94,6 @@ class DatabaseConnector:
 
     def getAllAlbums(self):
         return self.__connector.getAllAlbums()
+
+    def addTracksToAlbum(self,albumId,tracksData):
+        return self.__connector.addTracksToAlbum(albumId,tracksData)

@@ -66,6 +66,27 @@ class AlbumTestCase(unittest.TestCase):
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 2)
 
+    def test_AddTrackToAnAlbum(self):
+        #Agrego User
+        userPostData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        requests.put('http://localhost:8080/apiv1/users', json=userPostData)
+        #Agrego Album
+        firstAlbumJsonData = {'name': 'AlbumX',
+                         'year': '2010',
+                         'owner': 'JoseYYY'}
+        requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
+        #Agrego Track
+        trackPostData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
+        requests.put('http://localhost:8080/apiv1/tracks', json=trackPostData)
+        #Agrego Track a Album
+        addTrackData = {'tracks' : [ 'Tema 1']}
+        putTrackReq = requests.put('http://localhost:8080/apiv1/albums/AlbumX', json=addTrackData)
+        self.assertEqual(200,putTrackReq.status_code)
+        self.assertEqual('OK',putTrackReq.reason)
+        self.assertEqual('Album updated', putTrackReq.text)
 
 
 
@@ -75,6 +96,7 @@ class AlbumTestCase(unittest.TestCase):
         requests.delete('http://localhost:8080/apiv1/albums/AlbumX')
         requests.delete('http://localhost:8080/apiv1/albums/AlbumY')
         requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
+        requests.delete('http://localhost:8080/apiv1/tracks/Tema 1')
 
 
 

@@ -48,3 +48,9 @@ class AlbumUser(Base):
     __tablename__ = 'AlbumUser'
     albumName = Column(String(50), ForeignKey('Album.albumName', ondelete='CASCADE'),primary_key=True)
     userName = Column(String(50), ForeignKey('User_Data.userName', ondelete='CASCADE'),primary_key=True)
+
+class AlbumTracks(Base):
+    __tablename__ = 'AlbumTracks'
+    albumName = Column(String(50), ForeignKey('Album.albumName', ondelete='CASCADE'),primary_key=True)
+    trackName = Column(String(100), ForeignKey('Track.trackName', ondelete='CASCADE'),primary_key=True)
+
