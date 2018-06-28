@@ -135,3 +135,6 @@ class Connector:
         self.__dbSession.query(Album).filter_by(albumName=albumId).update(data)
         self.__dbSession.commit()
 
+    def getAllAlbums(self):
+        return getAlbumLikeNameParser(self.__dbSession.query(Album))
+

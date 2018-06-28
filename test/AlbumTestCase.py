@@ -47,10 +47,33 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual('AlbumX',secondAlbumResponse.album.albumName)
         self.assertEqual(2000,secondAlbumResponse.album.albumYear)
 
+    def test_getAllAlbums(self):
+        #Agrego dos albums a la BD
+        postData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        requests.put('http://localhost:8080/apiv1/users', json=postData)
+        firstAlbumJsonData = {'name': 'AlbumX',
+                         'year': '2010',
+                         'owner': 'JoseYYY'}
+        requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
+        secondAlbumJsonData = {'name': 'AlbumY',
+                         'year': '2012',
+                         'owner': 'JoseYYY'}
+        requests.put('http://localhost:8080/apiv1/albums', json=secondAlbumJsonData)
+        getAlbumReq = requests.get('http://localhost:8080/apiv1/albums')
+        jsonResponse = json.loads(getAlbumReq.text)
+        self.assertEqual(len(jsonResponse), 2)
+
+
+
+
 
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/albums/AlbumX')
+        requests.delete('http://localhost:8080/apiv1/albums/AlbumY')
         requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
 
 

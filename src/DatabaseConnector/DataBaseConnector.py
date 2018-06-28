@@ -91,3 +91,6 @@ class DatabaseConnector:
 
     def updateAlbum(self,albumId,data):
         return self.__connector.updateAlbum(albumId,data)
+
+    def getAllAlbums(self):
+        return self.__connector.getAllAlbums()

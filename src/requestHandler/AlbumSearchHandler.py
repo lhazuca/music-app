@@ -8,8 +8,12 @@ class AlbumSearchHandler(tornado.web.RequestHandler) :
         statusCode = 200
         statusMessage = ''
         try:
-            albumLikeName = self.get_argument('albumLikeName')
-            statusMessage = self.application.db.getAlbumLikeName(albumLikeName)
+            albumLikeName = self.get_argument('albumLikeName',default=None)
+            if(albumLikeName != None):
+                statusMessage = self.application.db.getAlbumLikeName(albumLikeName)
+            else:
+                statusMessage = self.application.db.getAllAlbums()
+
         except Exception as e:
             raise e
             statusCode = 400
