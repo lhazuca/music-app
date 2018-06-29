@@ -9,14 +9,14 @@
  |Como usuario quiero agregar un track a una playlist |?|3|NO|
  |Como usuario quiero eliminar un track a una playlist|?|5|NO|
  |Verificar que lo que se manda por el json es valido|?|5|NO|
- |Unificar respuestas de los json|?|2|NO|
- |Unificar nombres de las variables de las urls|?|3|NO|
+ |Unificar respuestas de los json|Matias|2|SI|
+ |Unificar nombres de las variables de las urls|Matias|3|SI|
  |Actualizar los passwords de usuarios|?|2|NO|
  |Requisito de estar logeado para usar un metodo|?|5|NO|
  |Implementar get general para track|?|3|NO|
  |Implementar get general para album|?|3|NO|
  |Implementar get general para playlist|?|3|NO|
- |Persistir archivos mp3 en tracks|?|7|NO|
+ |Persistir archivos mp3 en tracks|Matias|7|SI|
  |TOTAL||50|||
 
 
