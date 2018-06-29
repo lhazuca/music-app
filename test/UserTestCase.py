@@ -41,7 +41,7 @@ class UserTestCase(unittest.TestCase):
         self.assertEqual(getUserReq.reason, 'OK')
         self.assertEqual(getUserReq.text, 'Username not found')
 
-    def test_updateAUserNameAndPassword(self):
+    def test_updateAUserUserName(self):
         jsonData = {'name': 'Jose',
                     'lastName': 'Perez',
                     'userName': 'JoseYYY',
@@ -57,6 +57,23 @@ class UserTestCase(unittest.TestCase):
         getUserReq = requests.get('http://localhost:8080/apiv1/users/JoseYYY')
         updateResponse = json.loads(getUserReq.text, object_hook=lambda d: namedtuple('User', d.keys())(*d.values()))
         self.assertEqual('Pepe', updateResponse.user.name)
+
+    def test_updateAUserPassword(self):
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+
+        jsonUpdate = {'password': 'ClaveNueva123'}
+        updateUserReq = requests.put('http://localhost:8080/apiv1/login/JoseYYY',json=jsonUpdate)
+
+        self.assertEqual(updateUserReq.status_code, 200)
+        self.assertEqual(updateUserReq.reason, 'OK')
+
+        getUserReq = requests.get('http://localhost:8080/apiv1/login/JoseYYY')
+        updateResponse = json.loads(getUserReq.text, object_hook=lambda d: namedtuple('UserLogin', d.keys())(*d.values()))
+        self.assertEqual('ClaveNueva123', updateResponse.userLogin.password)
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
