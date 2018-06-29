@@ -26,16 +26,25 @@ class DatabaseConnector:
     def getUser(self, userName):
         return self.__connector.getUser(userName)
 
+    def getUserLogin(self, userName):
+        return self.__connector.getUserLogin(userName)
+
     def deleteUser(self, userName):
         return self.__connector.deleteUser(userName)
 
-    def updateUser(self, userName, userData):
-        return self.__connector.updateUser(userName, userData)
+    def updateUserData(self, userName, userData):
+        return self.__connector.updateUserData(userName, userData)
+
+    def updateUserCredentials(self, userName, password):
+        return self.__connector.updateUserCredentials(userName, password)
 
     # Playlist management methods
 
     def getPlaylistLikeName(self, playlistName):
         return self.__connector.getPlaylistLikeName(playlistName)
+
+    def getAllPlaylists(self):
+        return self.__connector.getAllPlaylists()
 
     def addPlaylist(self, playlistName, userName, description):
         self.__connector.addPlaylist(playlistName, userName, description)
@@ -69,6 +78,9 @@ class DatabaseConnector:
 
     def getTrack(self,trackName):
         return self.__connector.getTrack(trackName)
+
+    def getAllTracks(self):
+        return self.__connector.getAllTracks();
 
     def getTrackLikeName(self,trackName):
         return self.__connector.getTrackLikeName(trackName)

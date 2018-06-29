@@ -10,6 +10,7 @@ from src.requestHandler.PlaylistHandler import PlaylistHandler
 from src.requestHandler.PlaylistSearchHandler import PlaylistSearchHandler
 from src.requestHandler.UserHandler import UserHandler
 from src.requestHandler.UserSearchHandler import UserSearchHandler
+from src.requestHandler.UserLoginHandler import UserLoginHandler
 
 
 class Application(tornado.web.Application):
@@ -21,6 +22,7 @@ class Application(tornado.web.Application):
         (r"/apiv1/playlists", PlaylistSearchHandler),
         (r"/apiv1/playlists/(.*)", PlaylistHandler),
         (r"/apiv1/users/(.*)", UserHandler),
+        (r"/apiv1/login/(.*)", UserLoginHandler),
         (r"/apiv1/users", UserSearchHandler),
         (r"/apiv1/tracks/(.*)", TrackHandler),
         (r"/apiv1/tracks", TrackSearchHandler),

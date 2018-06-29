@@ -16,6 +16,18 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
+    def get(self):
+        statusCode = 200
+        statusMessage = ''
+        try:
+            statusMessage = self.application.db.getAllPlaylists()
+        except Exception as e:
+            raise e
+            statusCode = 400
+            statusMessage = "Bad request"
+        self.set_status(statusCode)
+        self.write(statusMessage)
+
     def put(self):
         statusCode = 200
         statusMessage = 'Playlist added'
