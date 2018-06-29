@@ -37,7 +37,13 @@ class PlaylistHandler(tornado.web.RequestHandler):
         statusCode = 200
         statusMessage = 'Playlist deleted'
         try:
-            self.application.db.deletePlaylist(playlistName)
+            data = json.loads(self.request.body.decode('utf-8'))
+            if not data.__contains__('tracks'):
+                self.application.db.deletePlaylist(playlistName)
+            else:
+                tracks = data['tracks']
+                self.application.db.deleteTracksFromPlaylist(playlistName, tracks)
+                statusMessage = 'Tracks deleted from playlist'
         except Exception as e:
             raise e
             statusMessage = 'Playlist not deleted'
