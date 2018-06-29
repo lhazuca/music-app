@@ -11,17 +11,17 @@
  |Verificar que lo que se manda por el json es valido|?|5|NO|
  |Unificar respuestas de los json|?|2|NO|
  |Unificar nombres de las variables de las urls|?|3|NO|
- |Actualizar los passwords de usuarios|?|2|NO|
+ |Actualizar los passwords de usuarios|TOMAS|5|SI|
  |Requisito de estar logeado para usar un metodo|?|5|NO|
  |Implementar get general para track|?|3|NO|
  |Implementar get general para album|?|3|NO|
- |Implementar get general para playlist|?|3|NO|
+ |Implementar get general para playlist|TOMAS|3|SI|
  |Persistir archivos mp3 en tracks|?|7|NO|
- |TOTAL||50|||
+ |TOTAL||53|||
 
 
 ## Hecho vs. Propuesto
 
 |PROPUESTO|HECHO|
 |---|---|
-|*50*|<span style="color:amarillo">*COMPLETAR*</span>
+|*53*|<span style="color:amarillo">*COMPLETAR*</span>

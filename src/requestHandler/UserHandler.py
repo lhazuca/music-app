@@ -16,14 +16,14 @@ class UserHandler(tornado.web.RequestHandler):
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    # update
+    # update data
     def put(self, userName):
 
         statusCode = 200
         statusMessage = 'User Updated'
         try:
             data = json.loads(self.request.body.decode('utf-8'))
-            self.application.db.updateUser(userName, data)
+            self.application.db.updateUserData(userName, data)
         except Exception as e:
             raise e
             statusCode = 400
