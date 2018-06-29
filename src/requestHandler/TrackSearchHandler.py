@@ -10,10 +10,12 @@ class TrackSearchHandler(tornado.web.RequestHandler) :
         try:
             trackLikeName = self.get_argument('trackLikeName')
             statusMessage = self.application.db.getTrackLikeName(trackLikeName)
-        except Exception as e:
+        except tornado.web.MissingArgumentError as e:
+            statusMessage = self.application.db.getAllTracks()
+        except Exception as e :
             raise e
-            statusCode = 400
-            statusMessage = "Bad request"
+            statusCode=400
+            statusMessage= 'Bad request'
         self.set_status(statusCode)
         self.write(statusMessage)
 

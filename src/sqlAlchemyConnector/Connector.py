@@ -143,6 +143,9 @@ class Connector:
         self.__dbSession.query(Track).filter_by(trackName=trackId).update(data)
         self.__dbSession.commit()
 
+    def getAllTracks(self):
+        return getTrackLikeNameParser(self.__dbSession.query(Track))
+
     # Album managment
 
     def getAlbumLikeName(self,albumName):
