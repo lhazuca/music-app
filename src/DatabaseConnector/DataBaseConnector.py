@@ -79,6 +79,9 @@ class DatabaseConnector:
     def getTrack(self,trackName):
         return self.__connector.getTrack(trackName)
 
+    def getAllTracks(self):
+        return self.__connector.getAllTracks();
+
     def getTrackLikeName(self,trackName):
         return self.__connector.getTrackLikeName(trackName)
 

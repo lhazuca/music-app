@@ -95,6 +95,31 @@ class TrackTestCase(unittest.TestCase):
                                          object_hook=lambda d: namedtuple('Track', d.keys())(*d.values()))
         self.assertEqual('Tema 1', secondAlbumResponse.track.trackName)
         self.assertEqual('nuevo contenido', secondAlbumResponse.track.fileContent)
+    def test_get_All_Tracks(self):
+        jsonData = {'name': 'Jose',
+                    'lastName': 'Perez',
+                    'userName': 'JoseYYY',
+                    'password': 'Clave1234._5'}
+        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+
+        putData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
+        addTrackReq = requests.put('http://localhost:8080/apiv1/tracks', json=putData)
+
+        putData2 = {'trackName': 'Tema 2', 'fileContent': 'contenido2', 'owner': 'JoseYYY'}
+        addTrackReq2 = requests.put('http://localhost:8080/apiv1/tracks', json=putData2)
+
+        putData3 = {'trackName': 'Musica 1', 'fileContent': 'contenido3', 'owner': 'JoseYYY'}
+        addTrackReq3 = requests.put('http://localhost:8080/apiv1/tracks', json=putData3)
+
+        searchReq = requests.get('http://localhost:8080/apiv1/tracks')
+
+        self.assertEqual(searchReq.status_code, 200)
+        self.assertEqual(searchReq.reason, 'OK')
+        jsonResponse = json.loads(searchReq.text)
+        self.assertEqual(len(jsonResponse), 3)
+
+        requests.delete('http://localhost:8080/apiv1/tracks/Tema 2')
+        requests.delete('http://localhost:8080/apiv1/tracks/Musica 1')
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/users/JoseYYY')
