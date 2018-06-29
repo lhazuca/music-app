@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from src.models.models import *
 from src.parsers.TrackParse import getTrackLikeNameParser
 from src.parsers.TrackParse import getTrackParser
-from src.parsers.UserParse import getUserParse
+from src.parsers.UserLoginParser import getUserLoginParser
 from src.parsers.PlaylistParser import getPlaylistLikeNameParser
 from src.parsers.UserParser import getUserParser
 from src.parsers.AlbumParser import getAlbumLikeNameParser
@@ -38,6 +38,15 @@ class Connector:
             return getUserParser(user)
         else:
             return 'Username not found'
+
+    def getUserLogin(self, userName):
+        user = self.__dbSession.query(User_Login).filter_by(userName=userName).first()
+        if user is not None:
+            return getUserLoginParser(user)
+        else:
+            return 'Username not found'
+
+
     def deleteUser(self, userName):
         user = self.__dbSession.query(User_Data).filter_by(userName=userName).first()
         if user is not None:
@@ -46,11 +55,13 @@ class Connector:
         else:
             'User does not exists'
 
-    def updateUser(self, userName, userdata):
+    def updateUserData(self, userName, userdata):
         self.__dbSession.query(User_Data).filter_by(userName=userName).update(userdata)
         self.__dbSession.commit()
-        # self.__dbSession.query(User_Login).filter_by(password=userdata.password).update(userdata.password)
-        # self.__dbSession.commit()
+
+    def updateUserCredentials(self, userName, password):
+        self.__dbSession.query(User_Login).filter_by(userName=userName).update(password)
+        self.__dbSession.commit()
 
     # Playlist management
 
@@ -70,6 +81,9 @@ class Connector:
         return getPlaylistParser(self.__dbSession.query(Playlist).
                                  filter(Playlist.playlistName.__eq__(playlistName)).first())
 
+    def getAllPlaylists(self):
+        return getPlaylistLikeNameParser(self.__dbSession.query(Playlist))
+
     def updatePlaylist(self, playlistName, data):
         self.__dbSession.query(Playlist).filter_by(playlistName=playlistName).update(data)
         self.__dbSession.commit()
@@ -79,10 +93,31 @@ class Connector:
         if (playlistToBeDeleted != None):
             self.__dbSession.delete(playlistToBeDeleted)
             self.__dbSession.commit()
+
+    def addTracksToPlaylist(self, playlistName, tracksData):
+        for track in tracksData:
+            self.addTrackToPlaylist(playlistName, track)
+
+    def addTrackToPlaylist(self, playlistName, trackName):
+        newTrackPlaylistData = PlaylistTracks(playlistName=playlistName, trackName=trackName)
+        self.__dbSession.add(newTrackPlaylistData)
+        self.__dbSession.commit()
+
+    def deleteTracksFromPlaylist(self, playlistName, tracksData):
+        for track in tracksData:
+            self.deleteTrackFromPlaylist(playlistName, track)
+
+    def deleteTrackFromPlaylist(self, playlistName, trackName):
+        playlistTrackToBeDeleted = self.__dbSession.query(PlaylistTracks)\
+            .filter_by(playlistName=playlistName, trackName=trackName).first()
+        if (playlistTrackToBeDeleted != None):
+            self.__dbSession.delete(playlistTrackToBeDeleted)
+            self.__dbSession.commit()
             
    #Track methods
 
     def addTrack(self, owner,trackName, fileContent):
+
         self.__dbSession.add(Track(trackName=trackName, fileContent=fileContent))
         self.__dbSession.commit()
         self.__dbSession.add(UserTracks(userName=owner,trackName=trackName))
@@ -108,6 +143,9 @@ class Connector:
     def updateTrack(self, trackId, data):
         self.__dbSession.query(Track).filter_by(trackName=trackId).update(data)
         self.__dbSession.commit()
+
+    def getAllTracks(self):
+        return getTrackLikeNameParser(self.__dbSession.query(Track))
 
     # Album managment
 

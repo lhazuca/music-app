@@ -26,16 +26,25 @@ class DatabaseConnector:
     def getUser(self, userName):
         return self.__connector.getUser(userName)
 
+    def getUserLogin(self, userName):
+        return self.__connector.getUserLogin(userName)
+
     def deleteUser(self, userName):
         return self.__connector.deleteUser(userName)
 
-    def updateUser(self, userName, userData):
-        return self.__connector.updateUser(userName, userData)
+    def updateUserData(self, userName, userData):
+        return self.__connector.updateUserData(userName, userData)
+
+    def updateUserCredentials(self, userName, password):
+        return self.__connector.updateUserCredentials(userName, password)
 
     # Playlist management methods
 
     def getPlaylistLikeName(self, playlistName):
         return self.__connector.getPlaylistLikeName(playlistName)
+
+    def getAllPlaylists(self):
+        return self.__connector.getAllPlaylists()
 
     def addPlaylist(self, playlistName, userName, description):
         self.__connector.addPlaylist(playlistName, userName, description)
@@ -52,6 +61,12 @@ class DatabaseConnector:
     def getPlaylistWithSubString(self,subString):
         return self.__connector.getPlaylistWithSubString(subString)
 
+    def addTracksToPlaylist(self, playlistName, tracksData):
+        return self.__connector.addTracksToPlaylist(playlistName, tracksData)
+
+    def deleteTracksFromPlaylist(self, playlistName, tracksData):
+        return self.__connector.deleteTracksFromPlaylist(playlistName, tracksData)
+
     # Artist File management methods
 
     def addArtistAudioFile(self, fileName, isAudioFile, artist):
@@ -62,13 +77,16 @@ class DatabaseConnector:
 
     #Track methods
     def addTrack(self, owner, trackName, fileContent):
-        return self.__connector.addTrack(owner,trackName, fileContent)
+        self.__connector.addTrack(owner,trackName, fileContent)
 
     def deleteTrack(self, trackId):
         return self.__connector.deleteTrack(trackId)
 
     def getTrack(self,trackName):
         return self.__connector.getTrack(trackName)
+
+    def getAllTracks(self):
+        return self.__connector.getAllTracks();
 
     def getTrackLikeName(self,trackName):
         return self.__connector.getTrackLikeName(trackName)
