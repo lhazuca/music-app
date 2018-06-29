@@ -43,6 +43,6 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
         except Exception as e:
             raise e
             statusCode = 400
-            statusMessage = "Track not deleted"
+            statusMessage = "Tracks not deleted"
         self.set_status(statusCode)
         self.write(statusMessage)
