@@ -65,7 +65,7 @@ class AlbumTestCase(unittest.TestCase):
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums')
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 2)
-
+    @unittest.skip
     def test_AddTrackToAnAlbum(self):
         #Agrego User
         userPostData = {'name': 'Jose',
