@@ -62,7 +62,7 @@ class DatabaseConnector:
 
     #Track methods
     def addTrack(self, owner, trackName, fileContent):
-        return self.__connector.addTrack(owner,trackName, fileContent)
+        self.__connector.addTrack(owner,trackName, fileContent)
 
     def deleteTrack(self, trackId):
         return self.__connector.deleteTrack(trackId)

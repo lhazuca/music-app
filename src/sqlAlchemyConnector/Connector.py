@@ -83,6 +83,7 @@ class Connector:
    #Track methods
 
     def addTrack(self, owner,trackName, fileContent):
+
         self.__dbSession.add(Track(trackName=trackName, fileContent=fileContent))
         self.__dbSession.commit()
         self.__dbSession.add(UserTracks(userName=owner,trackName=trackName))
