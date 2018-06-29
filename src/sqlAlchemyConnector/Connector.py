@@ -173,3 +173,19 @@ class Connector:
         self.__dbSession.query(Album).filter_by(albumName=albumId).update(data)
         self.__dbSession.commit()
 
+    def getAllAlbums(self):
+        return getAlbumLikeNameParser(self.__dbSession.query(Album))
+
+    def addTracksToAlbum(self, albumId, tracksData):
+        for track in tracksData:
+            self.addTrackToAlbum(albumId,track)
+
+    def addTrackToAlbum(self,albumId,trackName):
+        albumUser = self.__dbSession.query(AlbumUser).filter_by(albumName=albumId).first()
+        albumOwner = albumUser.userName
+        trackUserRel = self.__dbSession.query(UserTracks).filter_by(userName=albumOwner,trackName=trackName)
+        if(trackUserRel != None):
+            newTrackAlbumData = AlbumTracks(albumName=albumId,trackName=trackName)
+            self.__dbSession.add(newTrackAlbumData)
+            self.__dbSession.commit()
+

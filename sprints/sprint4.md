@@ -3,8 +3,8 @@
 ## Backlog
  |UserStory|Lo Hace|User Story Points|Hecho|
  |---------|---------------|-------|-----|
- |Como usuario quiero editar nombre y año de un album|?|1|NO|
- |Como usuario quiero agregar un track a un album|?|3|NO|
+ |Como usuario quiero editar nombre y año de un album|LUCA|1|SI|
+ |Como usuario quiero agregar un track a un album|LUCA|3|NO|
  |Como usuario quiero eliminar un track de una album |?|5|NO|
  |Como usuario quiero agregar un track a una playlist |BRIAN|3|SI|
  |Como usuario quiero eliminar un track a una playlist|BRIAN|5|SI|
@@ -14,7 +14,7 @@
  |Actualizar los passwords de usuarios|TOMAS|5|SI|
  |Requisito de estar logeado para usar un metodo|?|5|NO|
  |Implementar get general para track|HENRY|3|SI|
- |Implementar get general para album|?|3|NO|
+ |Implementar get general para album|LUCA|3|SI|
  |Implementar get general para playlist|TOMAS|3|SI|
  |Persistir archivos mp3 en tracks|Matias|7|SI|
  |TOTAL||50|||

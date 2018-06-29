@@ -33,7 +33,12 @@ class AlbumHandler(tornado.web.RequestHandler) :
         statusMessage = 'Album updated'
         try:
             data=json.loads(self.request.body.decode('utf-8'))
-            self.application.db.updateAlbum(albumId,data)
+            if(not data.__contains__('tracks')):
+                self.application.db.updateAlbum(albumId,data)
+            else:
+                tracks = data['tracks']
+                self.application.db.addTracksToAlbum(albumId,tracks)
+
         except Exception as e:
             raise e
             statusMessage = 'Album not deleted'
