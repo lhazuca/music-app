@@ -21,7 +21,11 @@ class PlaylistHandler(tornado.web.RequestHandler):
         statusMessage = 'Playlist updated'
         try:
             data = json.loads(self.request.body.decode('utf-8'))
-            self.application.db.updatePlaylist(playlistName, data)
+            if not data.__contains__('tracks'):
+                self.application.db.updatePlaylist(playlistName, data)
+            else:
+                tracks = data['tracks']
+                self.application.db.addTracksToPlaylist(playlistName, tracks)
         except Exception as e:
             raise e
             statusMessage = 'Playlist not updated'

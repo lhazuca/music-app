@@ -6,8 +6,8 @@
  |Como usuario quiero editar nombre y año de un album|?|1|NO|
  |Como usuario quiero agregar un track a un album|?|3|NO|
  |Como usuario quiero eliminar un track de una album |?|5|NO|
- |Como usuario quiero agregar un track a una playlist |?|3|NO|
- |Como usuario quiero eliminar un track a una playlist|?|5|NO|
+ |Como usuario quiero agregar un track a una playlist |BRIAN|3|SI|
+ |Como usuario quiero eliminar un track a una playlist|BRIAN|5|SI|
  |Verificar que lo que se manda por el json es valido|?|5|NO|
  |Unificar respuestas de los json|Matias|2|SI|
  |Unificar nombres de las variables de las urls|Matias|3|SI|

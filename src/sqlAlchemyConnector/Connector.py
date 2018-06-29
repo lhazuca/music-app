@@ -93,6 +93,26 @@ class Connector:
         if (playlistToBeDeleted != None):
             self.__dbSession.delete(playlistToBeDeleted)
             self.__dbSession.commit()
+
+    def addTracksToPlaylist(self, playlistName, tracksData):
+        for track in tracksData:
+            self.addTrackToPlaylist(playlistName, track)
+
+    def addTrackToPlaylist(self, playlistName, trackName):
+        newTrackPlaylistData = PlaylistTracks(playlistName=playlistName, trackName=trackName)
+        self.__dbSession.add(newTrackPlaylistData)
+        self.__dbSession.commit()
+
+    def deleteTracksFromPlaylist(self, playlistName, tracksData):
+        for track in tracksData:
+            self.deleteTrackFromPlaylist(playlistName, track)
+
+    def deleteTrackFromPlaylist(self, playlistName, trackName):
+        playlistTrackToBeDeleted = self.__dbSession.query(PlaylistTracks)\
+            .filter_by(playlistName=playlistName, trackName=trackName).first()
+        if (playlistTrackToBeDeleted != None):
+            self.__dbSession.delete(playlistTrackToBeDeleted)
+            self.__dbSession.commit()
             
    #Track methods
 

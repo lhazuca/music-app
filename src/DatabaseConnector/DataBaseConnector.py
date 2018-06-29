@@ -61,6 +61,12 @@ class DatabaseConnector:
     def getPlaylistWithSubString(self,subString):
         return self.__connector.getPlaylistWithSubString(subString)
 
+    def addTracksToPlaylist(self, playlistName, tracksData):
+        return self.__connector.addTracksToPlaylist(playlistName, tracksData)
+
+    def deleteTracksFromPlaylist(self, playlistName, tracksData):
+        return self.__connector.deleteTracksFromPlaylist(playlistName, tracksData)
+
     # Artist File management methods
 
     def addArtistAudioFile(self, fileName, isAudioFile, artist):
