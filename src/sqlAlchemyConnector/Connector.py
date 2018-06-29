@@ -14,7 +14,7 @@ from src.parsers.PlaylistParser import getPlaylistParser
 class Connector:
 
     def __init__(self):
-        dbRoot = 'mysql+pymysql://ci:ci@localhost:3306/ci'
+        dbRoot = 'mysql+pymysql://root:root@localhost:3306/ci'
         self.__engine = create_engine(dbRoot)
         Base.metadata.create_all(self.__engine)
         self.__session = sessionmaker()
@@ -79,6 +79,15 @@ class Connector:
         if (playlistToBeDeleted != None):
             self.__dbSession.delete(playlistToBeDeleted)
             self.__dbSession.commit()
+
+    def addTracksToPlaylist(self, playlistName, tracksData):
+        for track in tracksData:
+            self.addTrackToPlaylist(playlistName, track)
+
+    def addTrackToPlaylist(self, playlistName, trackName):
+        newTrackPlaylistData = PlaylistTracks(playlistName=playlistName, trackName=trackName)
+        self.__dbSession.add(newTrackPlaylistData)
+        self.__dbSession.commit()
             
    #Track methods
 

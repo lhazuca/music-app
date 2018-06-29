@@ -68,6 +68,30 @@ class PlaylistTestCase(unittest.TestCase):
         updateResponse = json.loads(getPlaylistReq.text, object_hook=lambda d: namedtuple('Playlist', d.keys())(*d.values()))
         self.assertEqual('Rock songs from the 80', updateResponse.playlist.description)
 
+    def test_add_track_Song1_to_playlist_RockClassics(self):
+        secondUserJsonData = {'name': 'Tom',
+                            'lastName': 'Johnson',
+                            'userName': 'Tom99',
+                            'password': 'Password4567'}
+        requests.put('http://localhost:8080/apiv1/users', json=secondUserJsonData)
+
+        playlistJsonData = {'playlistName': 'RockClassics',
+                            'userName': 'Max01',
+                            'description': 'Classic rock songs'}
+        requests.put('http://localhost:8080/apiv1/playlists', json=playlistJsonData)
+
+        trackData = {'trackName': 'Song1', 'fileContent': 'content', 'owner': 'Tom99'}
+        requests.put('http://localhost:8080/apiv1/tracks', json=trackData)
+
+        playlistTrackData = {'tracks': ['Song1']}
+        addTrackReq = requests.put('http://localhost:8080/apiv1/playlists/RockClassics', json=playlistTrackData)
+        self.assertEqual(addTrackReq.status_code, 200)
+        self.assertEqual(addTrackReq.reason, 'OK')
+        self.assertEqual(addTrackReq.text, 'Playlist updated')
+
+        requests.delete('http://localhost:8080/apiv1/tracks/Song1')
+        requests.delete('http://localhost:8080/apiv1/users/Tom99')
+
     def tearDown(self):
         jsonData = {'playlistName': 'RockClassics'}
         requests.delete('http://localhost:8080/apiv1/users/Max01')
