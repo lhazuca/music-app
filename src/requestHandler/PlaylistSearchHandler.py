@@ -31,3 +31,18 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
             statusMessage = "Playlist not added"
         self.set_status(statusCode)
         self.write(statusMessage)
+
+    def delete(self):
+        statusCode = 200
+        statusMessage = 'Tracks deleted from playlist'
+        try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            playlistName = data['playlistName']
+            tracks = data['tracks']
+            self.application.db.deleteTracksFromPlaylist(playlistName, tracks)
+        except Exception as e:
+            raise e
+            statusCode = 400
+            statusMessage = "Track not deleted"
+        self.set_status(statusCode)
+        self.write(statusMessage)

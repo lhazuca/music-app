@@ -107,8 +107,8 @@ class PlaylistTestCase(unittest.TestCase):
         playlistTrackData = {'tracks': ['Song1']}
         requests.put('http://localhost:8080/apiv1/playlists/RockClassics', json=playlistTrackData)
 
-        playlistTrackData2 = {'tracks': ['Song1']}
-        deleteTrackReq = requests.delete('http://localhost:8080/apiv1/playlists/RockClassics', json=playlistTrackData2)
+        playlistTrackData2 = {'playlistName': 'RockClassics', 'tracks': ['Song1']}
+        deleteTrackReq = requests.delete('http://localhost:8080/apiv1/playlists', json=playlistTrackData2)
 
         self.assertEqual(deleteTrackReq.status_code, 200)
         self.assertEqual(deleteTrackReq.reason, 'OK')
