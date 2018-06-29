@@ -27,6 +27,11 @@ class PlaylistUser(Base):
     playlistName = Column(String(50), ForeignKey('Playlist.playlistName', ondelete='CASCADE'), primary_key=True)
     userName = Column(String(50), ForeignKey('User_Data.userName', ondelete='CASCADE'), primary_key=True)
 
+class PlaylistTracks(Base):
+    __tablename__ = 'PlaylistTracks'
+    playlistName = Column(String(50), ForeignKey('Playlist.playlistName', ondelete='CASCADE'), primary_key=True)
+    trackName = Column(String(100), ForeignKey('Track.trackName', ondelete='CASCADE'), primary_key=True)
+
 class Track(Base):
     __tablename__ = 'Track'
     trackName = Column(String(100), primary_key=True)
