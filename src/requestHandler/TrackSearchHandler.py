@@ -1,8 +1,11 @@
 import json
-
 import tornado.web
+from src.appConfig import ENV
 
-class TrackSearchHandler(tornado.web.RequestHandler) :
+
+class TrackSearchHandler(tornado.web.RequestHandler):
+
+
 
     def get(self):
         statusCode = 200
@@ -19,14 +22,20 @@ class TrackSearchHandler(tornado.web.RequestHandler) :
         self.set_status(statusCode)
         self.write(statusMessage)
 
-    def put(self):
+
+    def post(self):
         statusCode = 200
         statusMessage = 'Track added'
-        try :
-            data = json.loads(self.request.body.decode('utf-8'))
-            trackName = data['trackName']
-            owner = data['owner']
-            fileContent =data['fileContent']
+
+        try:
+            fileInfo = self.request.files['file'][0]
+            fileName = fileInfo['filename']
+            owner = self.get_argument('owner')
+            trackName = self.get_argument('trackName')
+            fh = open(self.getFilePath(fileName), 'wb')
+            fh.write(fileInfo['body'])
+            fh.close()
+            fileContent = fileName
             self.application.db.addTrack(owner,trackName,fileContent)
         except Exception as e:
             raise e
@@ -34,3 +43,6 @@ class TrackSearchHandler(tornado.web.RequestHandler) :
             statusMessage = "Track not added"
         self.set_status(statusCode)
         self.write(statusMessage)
+
+    def getFilePath(self,fileName):
+        return 'mp3Files/'+fileName if ENV == 'dev' else 'src/mp3Files/'+fileName
