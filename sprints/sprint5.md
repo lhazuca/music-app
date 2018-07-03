@@ -15,7 +15,7 @@
  |Pulir los tests de playlists                       |?      |2                |NO   |
  |Presentación                                       |?      |?????            |NO   |
  |Diagrama de caso de uso                            |LUCA   |3                |NO   |
- |TOTAL                                              |       |37               |     |
+ |TOTAL                                              |       |42               |     |
 
 
 ## Hecho vs. Propuesto
