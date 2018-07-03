@@ -4,6 +4,7 @@
  |UserStory                                          |Lo Hace|User Story Points|Hecho|
  |---------------------------------------------------|-------|-----------------|-----|
  |Implementar autenticación                          |?      |7                |NO   |
+ |Como usuario quiero eliminar un track de una album |LUCA   |5                |NO   |
  |Autenticar en métodos de tracks                    |?      |3                |NO   |
  |Autenticar en métodos de albums                    |LUCA   |5                |NO   |
  |Autenticar en métodos de playlists                 |?      |3                |NO   |
