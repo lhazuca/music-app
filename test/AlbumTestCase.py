@@ -3,7 +3,16 @@ import requests
 import json
 from collections import namedtuple
 
+from src.appConfig import ENV
+
+
 class AlbumTestCase(unittest.TestCase):
+
+
+    def getFilePath(self,fileName):
+        return 'rsc/'+fileName if ENV == 'dev' else 'test/rsc/'+fileName
+
+
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
         jsonData = {'name': 'Jose',
                     'lastName': 'Perez',
@@ -65,7 +74,7 @@ class AlbumTestCase(unittest.TestCase):
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums')
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 2)
-    @unittest.skip
+
     def test_AddTrackToAnAlbum(self):
         #Agrego User
         userPostData = {'name': 'Jose',
@@ -79,8 +88,10 @@ class AlbumTestCase(unittest.TestCase):
                          'owner': 'JoseYYY'}
         requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
         #Agrego Track
-        trackPostData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
-        requests.put('http://localhost:8080/apiv1/tracks', json=trackPostData)
+        fileFullPath = self.getFilePath('metallica_fuell.mp3')
+        files= {'file': open(fileFullPath, 'rb')}
+        putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
+        addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', files=files,data=putData)
         #Agrego Track a Album
         addTrackData = {'tracks' : [ 'Tema 1']}
         putTrackReq = requests.put('http://localhost:8080/apiv1/albums/AlbumX', json=addTrackData)

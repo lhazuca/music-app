@@ -4,7 +4,7 @@
  |UserStory|Lo Hace|User Story Points|Hecho|
  |---------|---------------|-------|-----|
  |Como usuario quiero editar nombre y año de un album|LUCA|1|SI|
- |Como usuario quiero agregar un track a un album|LUCA|3|NO|
+ |Como usuario quiero agregar un track a un album|LUCA|3|SI|
  |Como usuario quiero eliminar un track de una album |?|5|NO|
  |Como usuario quiero agregar un track a una playlist |BRIAN|3|SI|
  |Como usuario quiero eliminar un track a una playlist|BRIAN|5|SI|
@@ -17,11 +17,11 @@
  |Implementar get general para album|LUCA|3|SI|
  |Implementar get general para playlist|TOMAS|3|SI|
  |Persistir archivos mp3 en tracks|Matias|7|SI|
- |TOTAL||50|||
+ |TOTAL||53|||
 
 
 ## Hecho vs. Propuesto
 
 |PROPUESTO|HECHO|
 |---|---|
-|*53*|<span style="color:amarillo">*COMPLETAR*</span>
+|*53*|<span style="color:red">*38*</span>
