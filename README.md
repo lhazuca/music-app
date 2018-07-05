@@ -21,7 +21,7 @@ Nro |   Nombre   | Legajo  | Mail
 
 [Sprint 4](./sprints/sprint4.md)
 
-[Sprint 5](./sprints/sprint4.md)
+[Sprint 5](./sprints/sprint5.md)
 
  ## Enlaces
   [Tablero en Trello del sprint Actual](https://trello.com/b/QoXXAIG5/music-app)
