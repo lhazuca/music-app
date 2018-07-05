@@ -1,9 +1,8 @@
 import json
+from src.requestHandler.BaseHandler import BaseHandler
 
-import tornado.web
 
-
-class TrackHandler(tornado.web.RequestHandler):
+class TrackHandler(BaseHandler):
 
     def get(self,trackId):
         statusCode = 200
@@ -11,7 +10,7 @@ class TrackHandler(tornado.web.RequestHandler):
         try:
             statusMessage = self.application.db.getTrack(trackId)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Bad request"
         self.set_status(statusCode)
@@ -23,7 +22,7 @@ class TrackHandler(tornado.web.RequestHandler):
         try:
             self.application.db.deleteTrack(trackId)
         except Exception as e:
-            raise e
+            #raise e
             statusMessage = 'Track not deleted'
             statusCode = 400
         self.set_status(statusCode)
@@ -36,7 +35,7 @@ class TrackHandler(tornado.web.RequestHandler):
             data= json.loads(self.request.body.decode('utf-8'))
             self.application.db.updateTrack(trackId,data)
         except Exception as e:
-            raise e
+            #raise e
             statusMessage = 'Track not update'
             statusCode = 400
         self.set_status(statusCode)

@@ -1,8 +1,7 @@
 import json
+from src.requestHandler.BaseHandler import BaseHandler
 
-import tornado.web
-
-class AlbumHandler(tornado.web.RequestHandler) :
+class AlbumHandler(BaseHandler):
 
     def get(self,albumId):
         statusCode = 200

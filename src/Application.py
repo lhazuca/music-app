@@ -11,6 +11,7 @@ from src.requestHandler.PlaylistSearchHandler import PlaylistSearchHandler
 from src.requestHandler.UserHandler import UserHandler
 from src.requestHandler.UserSearchHandler import UserSearchHandler
 from src.requestHandler.UserLoginHandler import UserLoginHandler
+from src.requestHandler.UserLogoutHandler import UserLogoutHandler
 
 
 class Application(tornado.web.Application):
@@ -23,6 +24,7 @@ class Application(tornado.web.Application):
         (r"/apiv1/playlists/(.*)", PlaylistHandler),
         (r"/apiv1/users/(.*)", UserHandler),
         (r"/apiv1/login/(.*)", UserLoginHandler),
+        (r"/apiv1/logout", UserLogoutHandler),
         (r"/apiv1/users", UserSearchHandler),
         (r"/apiv1/tracks/(.*)", TrackHandler),
         (r"/apiv1/tracks", TrackSearchHandler),
@@ -31,3 +33,4 @@ class Application(tornado.web.Application):
         ]
         tornado.web.Application.__init__(self, handlers, **settings)
         self.db = DatabaseConnector.instance()
+

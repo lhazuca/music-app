@@ -13,6 +13,7 @@ class User_Login(Base):
     __tablename__ = 'User_Login'
     userName = Column(String(50), ForeignKey('User_Data.userName',ondelete='CASCADE'),primary_key=True)
     password = Column(String(128))
+    isLoggedin = Column(Boolean(),default=False)
     lastPassChange = Column(DateTime, default=func.now())
 
 class Playlist(Base):

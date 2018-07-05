@@ -1,7 +1,7 @@
-import tornado.web
 import json
+from src.requestHandler.BaseHandler import BaseHandler
 
-class PlaylistSearchHandler(tornado.web.RequestHandler):
+class PlaylistSearchHandler(BaseHandler):
 
     def get(self):
         statusCode = 200
@@ -10,7 +10,7 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
             playlistLikeName = self.get_argument('playlistLikeName')
             statusMessage = self.application.db.getPlaylistLikeName(playlistLikeName)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Bad request"
         self.set_status(statusCode)
@@ -22,7 +22,7 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
         try:
             statusMessage = self.application.db.getAllPlaylists()
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Bad request"
         self.set_status(statusCode)
@@ -38,7 +38,7 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
             description = data['description']
             self.application.db.addPlaylist(playlistName, userName, description)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Playlist not added"
         self.set_status(statusCode)
@@ -53,7 +53,7 @@ class PlaylistSearchHandler(tornado.web.RequestHandler):
             tracks = data['tracks']
             self.application.db.deleteTracksFromPlaylist(playlistName, tracks)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Tracks not deleted"
         self.set_status(statusCode)

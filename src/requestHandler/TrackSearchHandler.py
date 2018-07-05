@@ -1,10 +1,9 @@
 import json
 import tornado.web
 from src.appConfig import ENV
+from src.requestHandler.BaseHandler import BaseHandler
 
-
-class TrackSearchHandler(tornado.web.RequestHandler):
-
+class TrackSearchHandler(BaseHandler):
 
 
     def get(self):
@@ -16,7 +15,7 @@ class TrackSearchHandler(tornado.web.RequestHandler):
         except tornado.web.MissingArgumentError as e:
             statusMessage = self.application.db.getAllTracks()
         except Exception as e :
-            raise e
+            #raise e
             statusCode=400
             statusMessage= 'Bad request'
         self.set_status(statusCode)
@@ -38,7 +37,7 @@ class TrackSearchHandler(tornado.web.RequestHandler):
             fileContent = fileName
             self.application.db.addTrack(owner,trackName,fileContent)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Track not added"
         self.set_status(statusCode)
