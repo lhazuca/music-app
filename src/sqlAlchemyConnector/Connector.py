@@ -71,8 +71,6 @@ class Connector:
             isLoggedin = user.isLoggedin
         else:
             raise ("User not found")
-        print("Loggin: " + str(isLoggedin))
-        print("Password:" + str(self.__isValidPassword(userName, password)))
         if not isLoggedin and self.__isValidPassword(userName,password):
 
             self.__dbSession.query(User_Login).filter_by(userName=userName).update({'isLoggedin':True})
