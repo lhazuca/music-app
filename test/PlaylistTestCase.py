@@ -192,9 +192,8 @@ class PlaylistTestCase(unittest.TestCase):
         requests.delete('http://localhost:8080/apiv1/playlists/oldrocksongs')
 
     def tearDown(self):
-        print("Ejecuto teardown")
-        jsonData = {'playlistName': 'RockClassics'}
 
+        jsonData = {'playlistName': 'RockClassics'}
         requests.delete('http://localhost:8080/apiv1/users/Max01')
         requests.delete('http://localhost:8080/apiv1/users/Tom99')
         requests.delete('http://localhost:8080/apiv1/tracks/Song1')

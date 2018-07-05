@@ -1,8 +1,7 @@
 import json
+from src.requestHandler.BaseHandler import BaseHandler
 
-import tornado.web
-
-class AlbumSearchHandler(tornado.web.RequestHandler) :
+class AlbumSearchHandler(BaseHandler):
 
     def get(self):
         statusCode = 200
@@ -15,7 +14,7 @@ class AlbumSearchHandler(tornado.web.RequestHandler) :
                 statusMessage = self.application.db.getAllAlbums()
 
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Bad request"
         self.set_status(statusCode)
@@ -29,9 +28,11 @@ class AlbumSearchHandler(tornado.web.RequestHandler) :
             name = data['name']
             year = int(data['year'])
             owner = data['owner']
-            self.application.db.addAlbum(name,year,owner)
+            #if self.isLoggendin(owner):
+            #    self.application.db.addAlbum(name,year,owner)
+            self.application.db.addAlbum(name, year, owner)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Album not added"
         self.set_status(statusCode)

@@ -38,6 +38,15 @@ class DatabaseConnector:
     def updateUserCredentials(self, userName, password):
         return self.__connector.updateUserCredentials(userName, password)
 
+    def logginUser(self,userName,password):
+        self.__connector.logginUser(userName, password)
+
+    def loggoutUser(self,userName):
+        self.__connector.loggoutUser(userName)
+
+    def isLoggedin(self,userName):
+        return self.__connector.isLoggedin(userName)
+
     # Playlist management methods
 
     def getPlaylistLikeName(self, playlistName):

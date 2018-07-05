@@ -1,7 +1,9 @@
 import json
-import tornado.web
+from hashlib import sha512
+from src.requestHandler.BaseHandler import BaseHandler
 
-class UserLoginHandler(tornado.web.RequestHandler):
+
+class UserLoginHandler(BaseHandler):
 
     # update password
     def put(self, userName):
@@ -11,7 +13,7 @@ class UserLoginHandler(tornado.web.RequestHandler):
             password = json.loads(self.request.body.decode('utf-8'))
             self.application.db.updateUserCredentials(userName, password)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "User Password was not updated"
         self.set_status(statusCode)
@@ -24,8 +26,22 @@ class UserLoginHandler(tornado.web.RequestHandler):
         try:
             statusMessage = self.application.db.getUserLogin(userName)
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = 'Bad request'
+        self.set_status(statusCode)
+        self.write(statusMessage)
+
+    def post(self,userName):
+        statusCode = 200
+        statusMessage = 'User logged-in'
+        try:
+            data = json.loads(self.request.body.decode('utf-8'))
+            password = sha512(data['password'].encode('utf-8')).hexdigest()
+            self.application.db.logginUser(userName, password)
+        except Exception as e:
+            #raise e
+            statusCode = 400
+            statusMessage = "User not logged-in"
         self.set_status(statusCode)
         self.write(statusMessage)

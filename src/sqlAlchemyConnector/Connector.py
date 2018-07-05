@@ -63,6 +63,52 @@ class Connector:
         self.__dbSession.query(User_Login).filter_by(userName=userName).update(password)
         self.__dbSession.commit()
 
+
+    def logginUser(self,userName,password):
+
+        user = self.__dbSession.query(User_Login).filter_by(userName=userName).first()
+        if user:
+            isLoggedin = user.isLoggedin
+        else:
+            raise ("User not found")
+        print("Loggin: " + str(isLoggedin))
+        print("Password:" + str(self.__isValidPassword(userName, password)))
+        if not isLoggedin and self.__isValidPassword(userName,password):
+
+            self.__dbSession.query(User_Login).filter_by(userName=userName).update({'isLoggedin':True})
+            self.__dbSession.commit()
+        else:
+            raise ("User lready loggedin")
+
+    def __isValidPassword(self,userName,password):
+        user = self.__dbSession.query(User_Login).filter_by(userName=userName).first()
+        if user:
+            return user.password == password
+        else:
+            return False
+
+
+    def loggoutUser(self, userName):
+        user = self.__dbSession.query(User_Login).filter_by(userName=userName).first()
+        if user:
+            isLoggedin = user.isLoggedin
+        else:
+            raise ("User not found")
+
+        if isLoggedin:
+            self.__dbSession.query(User_Login).filter_by(userName=userName).update({'isLoggedin': False})
+            self.__dbSession.commit()
+        else:
+            raise ("User not loggedin")
+
+    def isLoggedin(self, userName):
+        user = self.__dbSession.query(User_Login).filter_by(userName=userName).first()
+        if user and user.isLoggedin:
+            return True
+        else:
+            raise ("User invalid or not loggedin")
+
+
     # Playlist management
 
     def getPlaylistLikeName(self, playlistName):
@@ -162,7 +208,7 @@ class Connector:
 
     def deleteAlbum(self, albumName):
         itemToBeDeleted = self.__dbSession.query(Album).filter_by(albumName=albumName).first()
-        if (itemToBeDeleted != None):
+        if (itemToBeDeleted):
             self.__dbSession.delete(itemToBeDeleted)
             self.__dbSession.commit()
 

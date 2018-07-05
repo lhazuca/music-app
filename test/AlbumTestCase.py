@@ -19,6 +19,11 @@ class AlbumTestCase(unittest.TestCase):
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
         requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+
+        #Primero me logueo
+        #jsonData = {'password': 'Clave1234._5'}
+        #requests.post('http://localhost:8080/apiv1/login/pepePerez', json=jsonData)
+
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
@@ -26,6 +31,10 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(addAlbumReq.status_code, 200)
         self.assertEqual(addAlbumReq.reason, 'OK')
         self.assertEqual(addAlbumReq.text, 'Album added')
+
+        #Me deslogueo
+        # jsonData = {'userName': 'pepePerez'}
+        # requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
 
     def test_get_Nonexistent_Album(self):
         data = {'albumLikeName':'albumNone'}
@@ -86,6 +95,9 @@ class AlbumTestCase(unittest.TestCase):
         firstAlbumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
+        # Primero me logueo
+        jsonData = {'password': 'Clave1234._5'}
+        requests.post('http://localhost:8080/apiv1/login/pepePerez', json=jsonData)
         requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
         #Agrego Track
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
