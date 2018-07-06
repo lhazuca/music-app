@@ -28,6 +28,7 @@ class TrackSearchHandler(BaseHandler):
                 fileInfo = self.request.files['file'][0]
                 fileName = fileInfo['filename']
                 owner = self.get_argument('owner')
+                print(self.application.db.isLoggedin(owner))
                 if self.application.db.isLoggedin(owner):
                     trackName = self.get_argument('trackName')
                     fh = open(self.getFilePath(fileName), 'wb')

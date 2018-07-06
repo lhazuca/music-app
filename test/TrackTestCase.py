@@ -17,6 +17,9 @@ class TrackTestCase(unittest.TestCase):
                     'password': 'Clave1234._5'}
         addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
+        jsonData = {'password': 'Clave1234._5'}
+        logginUserReq = requests.post('http://localhost:8080/apiv1/login/JoseYYY', json=jsonData)
+
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
         files= {'file': open(fileFullPath, 'rb')}
         putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
@@ -25,6 +28,9 @@ class TrackTestCase(unittest.TestCase):
         self.assertEqual(200,addTrackReq .status_code)
         self.assertEqual('OK',addTrackReq .reason)
         self.assertEqual('Track added',addTrackReq .text)
+
+        jsonData = {'userName': 'JoseYYY'}
+        loggoutUserReq = requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
 
 
     def test_addTrack_Tema1_by_JoseYYY_When_it_is_not_logged(self):
