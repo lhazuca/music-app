@@ -33,6 +33,8 @@ class TrackHandler(BaseHandler):
         statusMessage = 'Track updated'
         try:
             data= json.loads(self.request.body.decode('utf-8'))
+            if 'owner' not in data.keys():
+                raise ('Bad Request')
             self.application.db.updateTrack(trackId,data)
         except Exception as e:
             #raise e
