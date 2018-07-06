@@ -225,11 +225,15 @@ class Connector:
             self.addTrackToAlbum(albumId,track)
 
     def addTrackToAlbum(self,albumId,trackName):
-        albumUser = self.__dbSession.query(AlbumUser).filter_by(albumName=albumId).first()
-        albumOwner = albumUser.userName
+        albumOwner = self.getAlbumOwner(albumId)
         trackUserRel = self.__dbSession.query(UserTracks).filter_by(userName=albumOwner,trackName=trackName)
         if(trackUserRel != None):
             newTrackAlbumData = AlbumTracks(albumName=albumId,trackName=trackName)
             self.__dbSession.add(newTrackAlbumData)
             self.__dbSession.commit()
+
+    def getAlbumOwner(self, albumId):
+        albumUser = self.__dbSession.query(AlbumUser).filter_by(albumName=albumId).first()
+        albumOwner = albumUser.userName
+        return albumOwner
 
