@@ -33,10 +33,9 @@ class AlbumHandler(BaseHandler):
         try:
             data=json.loads(self.request.body.decode('utf-8'))
             if(not data.__contains__('tracks')):
-                self.application.db.updateAlbum(albumId,data)
+                self.editAlbumInfo(albumId, data)
             else:
-                tracks = data['tracks']
-                self.application.db.addTracksToAlbum(albumId,tracks)
+                self.addTracks(albumId, data)
 
         except Exception as e:
             raise e
@@ -44,3 +43,15 @@ class AlbumHandler(BaseHandler):
             statusCode = 400
         self.set_status(statusCode)
         self.write(statusMessage)
+
+    def editAlbumInfo(self, albumId, data):
+        if self.isLoggendin(self.getOwner(albumId)):
+            self.application.db.updateAlbum(albumId, data)
+
+    def addTracks(self, albumId, data):
+        if self.isLoggendin(self.getOwner(albumId)):
+            tracks = data['tracks']
+            self.application.db.addTracksToAlbum(albumId, tracks)
+
+    def getOwner(self, albumId):
+        return self.application.db.getAlbumOwner(albumId)

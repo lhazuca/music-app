@@ -21,8 +21,8 @@ class AlbumTestCase(unittest.TestCase):
         requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
         #Primero me logueo
-        #jsonData = {'password': 'Clave1234._5'}
-        #requests.post('http://localhost:8080/apiv1/login/pepePerez', json=jsonData)
+        jsonData = {'password': 'Clave1234._5'}
+        requests.post('http://localhost:8080/apiv1/login/JoseYYY', json=jsonData)
 
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
@@ -33,8 +33,8 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(addAlbumReq.text, 'Album added')
 
         #Me deslogueo
-        # jsonData = {'userName': 'pepePerez'}
-        # requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
+        jsonData = {'userName': 'JoseYYY'}
+        requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
 
     def test_get_Nonexistent_Album(self):
         data = {'albumLikeName':'albumNone'}
@@ -50,6 +50,11 @@ class AlbumTestCase(unittest.TestCase):
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
         requests.put('http://localhost:8080/apiv1/users', json=postData)
+
+        #Primero me logueo
+        jsonData = {'password': 'Clave1234._5'}
+        requests.post('http://localhost:8080/apiv1/login/JoseYYY', json=jsonData)
+
         albumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
@@ -65,6 +70,10 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual('AlbumX',secondAlbumResponse.album.albumName)
         self.assertEqual(2000,secondAlbumResponse.album.albumYear)
 
+        #Me deslogueo
+        jsonData = {'userName': 'JoseYYY'}
+        requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
+
     def test_getAllAlbums(self):
         #Agrego dos albums a la BD
         postData = {'name': 'Jose',
@@ -72,6 +81,10 @@ class AlbumTestCase(unittest.TestCase):
                     'userName': 'JoseYYY',
                     'password': 'Clave1234._5'}
         requests.put('http://localhost:8080/apiv1/users', json=postData)
+        # Primero me logueo
+        jsonData = {'password': 'Clave1234._5'}
+        requests.post('http://localhost:8080/apiv1/login/JoseYYY', json=jsonData)
+
         firstAlbumJsonData = {'name': 'AlbumX',
                          'year': '2010',
                          'owner': 'JoseYYY'}
@@ -83,6 +96,11 @@ class AlbumTestCase(unittest.TestCase):
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums')
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 2)
+
+        #Me deslogueo
+        jsonData = {'userName': 'JoseYYY'}
+        requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
+
 
     def test_AddTrackToAnAlbum(self):
         #Agrego User
@@ -97,7 +115,8 @@ class AlbumTestCase(unittest.TestCase):
                          'owner': 'JoseYYY'}
         # Primero me logueo
         jsonData = {'password': 'Clave1234._5'}
-        requests.post('http://localhost:8080/apiv1/login/pepePerez', json=jsonData)
+        requests.post('http://localhost:8080/apiv1/login/JoseYYY', json=jsonData)
+
         requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
         #Agrego Track
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
@@ -110,6 +129,10 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(200,putTrackReq.status_code)
         self.assertEqual('OK',putTrackReq.reason)
         self.assertEqual('Album updated', putTrackReq.text)
+
+        #Me deslogueo
+        jsonData = {'userName': 'JoseYYY'}
+        requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
 
 
 
