@@ -2,23 +2,17 @@ import json
 import unittest
 from collections import namedtuple
 from src.appConfig import ENV
-
+from src.TestService import *
 import requests
-
-
-
 
 class TrackTestCase(unittest.TestCase):
 
     def getFilePath(self,fileName):
         return 'rsc/'+fileName if ENV == 'dev' else 'test/rsc/'+fileName
 
-    def test_addTrack_Tema1_by_JoseYYY(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+    def test_addTrack_Tema1_by_JoseYYY_When_is_logged(self):
+        createJosePerez()
+        logJosePerez()
 
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
         files= {'file': open(fileFullPath, 'rb')}
@@ -28,15 +22,22 @@ class TrackTestCase(unittest.TestCase):
         self.assertEqual(200,addTrackReq .status_code)
         self.assertEqual('OK',addTrackReq .reason)
         self.assertEqual('Track added',addTrackReq .text)
+        logoutJosePerez()
 
+    @unittest.skip
+    def test_addTrack_Tema1_by_JoseYYY_When_it_is_not_logged(self):
+        fileFullPath = self.getFilePath('metallica_fuell.mp3')
+        files= {'file': open(fileFullPath, 'rb')}
+        putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
+        addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', files=files,data=putData)
+
+        self.assertEqual(403,addTrackReq .status_code)
+        self.assertEqual('Forbidden',addTrackReq .reason)
+        self.assertEqual('User invalid or not loggedin',addTrackReq .text)
 
     def test_get_existent_track_by_id(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
-
+        createJosePerez()
+        logJosePerez()
         postData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
 
@@ -48,7 +49,7 @@ class TrackTestCase(unittest.TestCase):
         self.assertEqual(getTrackReq.reason, 'OK')
         jsonResponse = json.loads(getTrackReq.text)
         self.assertTrue(len(jsonResponse),1)
-
+        logoutJosePerez()
 
 
     def test_get_Nonexistent_track_by_id(self):
@@ -59,14 +60,11 @@ class TrackTestCase(unittest.TestCase):
 
 
     def test_get_two_tracks_with_substring_Tema(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+        createJosePerez()
 
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
         files = {'file': open(fileFullPath, 'rb')}
+        logJosePerez()
 
         putData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
         addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', data=putData, files=files)
@@ -88,13 +86,11 @@ class TrackTestCase(unittest.TestCase):
         requests.delete('http://localhost:8080/apiv1/tracks/Tema 2')
         requests.delete('http://localhost:8080/apiv1/tracks/Musica 1')
 
+        logoutJosePerez()
+
     @unittest.SkipTest
-    def test_updateTrackWithNameTema1(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+    def test_updateTrackWithNameTema1WhenIsLogged(self):
+        createJosePerez()
 
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
         files = {'file': open(fileFullPath, 'rb')}
@@ -115,13 +111,10 @@ class TrackTestCase(unittest.TestCase):
                                          object_hook=lambda d: namedtuple('Track', d.keys())(*d.values()))
         self.assertEqual('Tema 1', secondAlbumResponse.track.trackName)
         self.assertEqual('nuevo contenido', secondAlbumResponse.track.fileContent)
-    def test_get_All_Tracks(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        addUserReq = requests.put('http://localhost:8080/apiv1/users', json=jsonData)
 
+    def test_get_All_Tracks(self):
+        createJosePerez()
+        logJosePerez()
         putData = {'trackName': 'Tema 1', 'fileContent': 'contenido', 'owner': 'JoseYYY'}
         addTrackReq = requests.put('http://localhost:8080/apiv1/tracks', json=putData)
 
@@ -140,7 +133,7 @@ class TrackTestCase(unittest.TestCase):
 
         requests.delete('http://localhost:8080/apiv1/tracks/Tema 2')
         requests.delete('http://localhost:8080/apiv1/tracks/Musica 1')
-
+        logoutJosePerez()
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/users/JoseYYY')

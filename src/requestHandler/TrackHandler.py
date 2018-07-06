@@ -35,7 +35,12 @@ class TrackHandler(BaseHandler):
             data= json.loads(self.request.body.decode('utf-8'))
             if 'owner' not in data.keys():
                 raise ('Bad Request')
-            self.application.db.updateTrack(trackId,data)
+            owner = data['owner']
+            if self.application.db.isLoggedin(owner):
+                self.application.db.updateTrack(trackId,data)
+            else:
+                statusCode = 403
+                statusMessage = 'User invalid or not loggedin'
         except Exception as e:
             #raise e
             statusMessage = 'Track not update'
