@@ -40,7 +40,7 @@ class TrackSearchHandler(BaseHandler):
                     statusCode=403
                     statusMessage='User invalid or not loggedin'
         except Exception as e:
-            raise e
+            #raise e
             statusCode = 400
             statusMessage = "Track not added"
         self.set_status(statusCode)

@@ -1,6 +1,7 @@
 import unittest
-import requests
 import json
+
+from src.TestService import *
 from collections import namedtuple
 
 from src.appConfig import ENV
@@ -14,16 +15,16 @@ class AlbumTestCase(unittest.TestCase):
 
 
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
-        self.createJosePerez()
+        createJosePerez()
 
-        self.logJosePerez()
+        logJosePerez()
 
-        addAlbumReq = self.createAlbumXToJose()
+        addAlbumReq = createAlbumXToJose()
         self.assertEqual(addAlbumReq.status_code, 200)
         self.assertEqual(addAlbumReq.reason, 'OK')
         self.assertEqual(addAlbumReq.text, 'Album added')
 
-        self.logoutJosePerez()
+        logoutJosePerez()
 
 
     def test_get_Nonexistent_Album(self):
@@ -35,11 +36,11 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(len(jsonResponse), 0)
 
     def test_updateAlbumXData(self):
-        self.createJosePerez()
+        createJosePerez()
 
-        self.logJosePerez()
+        logJosePerez()
 
-        self.createAlbumXToJose()
+        createAlbumXToJose()
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums/AlbumX')
         albumResponse = json.loads(getAlbumReq.text, object_hook=lambda d: namedtuple('Album', d.keys())(*d.values()))
         self.assertEqual('AlbumX', albumResponse.album.albumName)
@@ -51,26 +52,26 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual('AlbumX',secondAlbumResponse.album.albumName)
         self.assertEqual(2000,secondAlbumResponse.album.albumYear)
 
-        self.logoutJosePerez()
+        logoutJosePerez()
 
     def test_getAllAlbums(self):
-        self.createJosePerez()
-        self.logJosePerez()
+        createJosePerez()
+        logJosePerez()
 
-        self.createAlbumXToJose()
-        self.createAlbumYToJose()
+        createAlbumXToJose()
+        createAlbumYToJose()
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums')
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 2)
 
-        self.logoutJosePerez()
+        logoutJosePerez()
 
 
     def test_AddTrackToAnAlbum(self):
-        self.createJosePerez()
-        self.logJosePerez()
+        createJosePerez()
+        logJosePerez()
 
-        self.createAlbumXToJose()
+        createAlbumXToJose()
         self.createTrack()
         addTrackData = {'tracks' : [ 'Tema 1']}
         putTrackReq = requests.put('http://localhost:8080/apiv1/albums/AlbumX', json=addTrackData)
@@ -78,42 +79,13 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual('OK',putTrackReq.reason)
         self.assertEqual('Album updated', putTrackReq.text)
 
-        self.logoutJosePerez()
-
-    def createAlbumXToJose(self):
-        albumJsonData = {'name': 'AlbumX',
-                         'year': '2010',
-                         'owner': 'JoseYYY'}
-        addAlbumReq = requests.put('http://localhost:8080/apiv1/albums', json=albumJsonData)
-        return addAlbumReq
-
-    def logoutJosePerez(self):
-        jsonData = {'userName': 'JoseYYY'}
-        requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
-
-    def logJosePerez(self):
-        jsonData = {'password': 'Clave1234._5'}
-        requests.post('http://localhost:8080/apiv1/login/JoseYYY', json=jsonData)
-
-    def createJosePerez(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+        logoutJosePerez()
 
     def createTrack(self):
         fileFullPath = self.getFilePath('metallica_fuell.mp3')
         files = {'file': open(fileFullPath, 'rb')}
         putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
         addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', files=files, data=putData)
-
-    def createAlbumYToJose(self):
-        albumJsonData = {'name': 'AlbumY',
-                         'year': '2012',
-                         'owner': 'JoseYYY'}
-        addAlbumReq = requests.put('http://localhost:8080/apiv1/albums', json=albumJsonData)
-        return addAlbumReq
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/albums/AlbumX')
