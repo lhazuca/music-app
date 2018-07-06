@@ -124,3 +124,6 @@ class DatabaseConnector:
 
     def addTracksToAlbum(self,albumId,tracksData):
         return self.__connector.addTracksToAlbum(albumId,tracksData)
+
+    def getAlbumOwner(self,albumName):
+        return self.__connector.getAlbumOwner(albumName)

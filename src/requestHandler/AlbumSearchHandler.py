@@ -28,9 +28,8 @@ class AlbumSearchHandler(BaseHandler):
             name = data['name']
             year = int(data['year'])
             owner = data['owner']
-            #if self.isLoggendin(owner):
-            #    self.application.db.addAlbum(name,year,owner)
-            self.application.db.addAlbum(name, year, owner)
+            if self.isLoggendin(owner):
+                self.application.db.addAlbum(name,year,owner)
         except Exception as e:
             #raise e
             statusCode = 400

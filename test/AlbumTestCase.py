@@ -1,6 +1,7 @@
 import unittest
-import requests
 import json
+
+from src.TestService import *
 from collections import namedtuple
 
 from src.appConfig import ENV
@@ -14,27 +15,17 @@ class AlbumTestCase(unittest.TestCase):
 
 
     def test_addAlbum_AlbumX_to_user_JoseXXX(self):
-        jsonData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/users', json=jsonData)
+        createJosePerez()
 
-        #Primero me logueo
-        #jsonData = {'password': 'Clave1234._5'}
-        #requests.post('http://localhost:8080/apiv1/login/pepePerez', json=jsonData)
+        logJosePerez()
 
-        albumJsonData = {'name': 'AlbumX',
-                         'year': '2010',
-                         'owner': 'JoseYYY'}
-        addAlbumReq = requests.put('http://localhost:8080/apiv1/albums', json=albumJsonData)
+        addAlbumReq = createAlbumXToJose()
         self.assertEqual(addAlbumReq.status_code, 200)
         self.assertEqual(addAlbumReq.reason, 'OK')
         self.assertEqual(addAlbumReq.text, 'Album added')
 
-        #Me deslogueo
-        # jsonData = {'userName': 'pepePerez'}
-        # requests.post('http://localhost:8080/apiv1/logout', json=jsonData)
+        logoutJosePerez()
+
 
     def test_get_Nonexistent_Album(self):
         data = {'albumLikeName':'albumNone'}
@@ -45,15 +36,11 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(len(jsonResponse), 0)
 
     def test_updateAlbumXData(self):
-        postData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/users', json=postData)
-        albumJsonData = {'name': 'AlbumX',
-                         'year': '2010',
-                         'owner': 'JoseYYY'}
-        requests.put('http://localhost:8080/apiv1/albums', json=albumJsonData)
+        createJosePerez()
+
+        logJosePerez()
+
+        createAlbumXToJose()
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums/AlbumX')
         albumResponse = json.loads(getAlbumReq.text, object_hook=lambda d: namedtuple('Album', d.keys())(*d.values()))
         self.assertEqual('AlbumX', albumResponse.album.albumName)
@@ -65,55 +52,40 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual('AlbumX',secondAlbumResponse.album.albumName)
         self.assertEqual(2000,secondAlbumResponse.album.albumYear)
 
+        logoutJosePerez()
+
     def test_getAllAlbums(self):
-        #Agrego dos albums a la BD
-        postData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/users', json=postData)
-        firstAlbumJsonData = {'name': 'AlbumX',
-                         'year': '2010',
-                         'owner': 'JoseYYY'}
-        requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
-        secondAlbumJsonData = {'name': 'AlbumY',
-                         'year': '2012',
-                         'owner': 'JoseYYY'}
-        requests.put('http://localhost:8080/apiv1/albums', json=secondAlbumJsonData)
+        createJosePerez()
+        logJosePerez()
+
+        createAlbumXToJose()
+        createAlbumYToJose()
         getAlbumReq = requests.get('http://localhost:8080/apiv1/albums')
         jsonResponse = json.loads(getAlbumReq.text)
         self.assertEqual(len(jsonResponse), 2)
 
+        logoutJosePerez()
+
+
     def test_AddTrackToAnAlbum(self):
-        #Agrego User
-        userPostData = {'name': 'Jose',
-                    'lastName': 'Perez',
-                    'userName': 'JoseYYY',
-                    'password': 'Clave1234._5'}
-        requests.put('http://localhost:8080/apiv1/users', json=userPostData)
-        #Agrego Album
-        firstAlbumJsonData = {'name': 'AlbumX',
-                         'year': '2010',
-                         'owner': 'JoseYYY'}
-        # Primero me logueo
-        jsonData = {'password': 'Clave1234._5'}
-        requests.post('http://localhost:8080/apiv1/login/pepePerez', json=jsonData)
-        requests.put('http://localhost:8080/apiv1/albums', json=firstAlbumJsonData)
-        #Agrego Track
-        fileFullPath = self.getFilePath('metallica_fuell.mp3')
-        files= {'file': open(fileFullPath, 'rb')}
-        putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
-        addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', files=files,data=putData)
-        #Agrego Track a Album
+        createJosePerez()
+        logJosePerez()
+
+        createAlbumXToJose()
+        self.createTrack()
         addTrackData = {'tracks' : [ 'Tema 1']}
         putTrackReq = requests.put('http://localhost:8080/apiv1/albums/AlbumX', json=addTrackData)
         self.assertEqual(200,putTrackReq.status_code)
         self.assertEqual('OK',putTrackReq.reason)
         self.assertEqual('Album updated', putTrackReq.text)
 
+        logoutJosePerez()
 
-
-
+    def createTrack(self):
+        fileFullPath = self.getFilePath('metallica_fuell.mp3')
+        files = {'file': open(fileFullPath, 'rb')}
+        putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
+        addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', files=files, data=putData)
 
     def tearDown(self):
         requests.delete('http://localhost:8080/apiv1/albums/AlbumX')
