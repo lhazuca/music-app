@@ -23,7 +23,7 @@ class UserHandler(tornado.web.RequestHandler):
         statusMessage = 'User Updated'
         try:
             data = json.loads(self.request.body.decode('utf-8'))
-            if {'name', 'lastName', 'userName'}.intersection(data.keys()) == []:
+            if {'name', 'lastName', 'userName'}.intersection(data.keys()) == {}:
                 raise("Bad Request")
             self.application.db.updateUserData(userName, data)
         except Exception as e:
