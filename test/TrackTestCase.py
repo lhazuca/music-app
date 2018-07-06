@@ -5,15 +5,12 @@ from src.appConfig import ENV
 
 import requests
 
-
-
-
 class TrackTestCase(unittest.TestCase):
 
     def getFilePath(self,fileName):
         return 'rsc/'+fileName if ENV == 'dev' else 'test/rsc/'+fileName
 
-    def test_addTrack_Tema1_by_JoseYYY(self):
+    def test_addTrack_Tema1_by_JoseYYY_When_is_logged(self):
         jsonData = {'name': 'Jose',
                     'lastName': 'Perez',
                     'userName': 'JoseYYY',
@@ -30,6 +27,15 @@ class TrackTestCase(unittest.TestCase):
         self.assertEqual('Track added',addTrackReq .text)
 
 
+    def test_addTrack_Tema1_by_JoseYYY_When_it_is_not_logged(self):
+        fileFullPath = self.getFilePath('metallica_fuell.mp3')
+        files= {'file': open(fileFullPath, 'rb')}
+        putData = {'trackName': 'Tema 1', 'owner': 'JoseYYY'}
+        addTrackReq = requests.post('http://localhost:8080/apiv1/tracks', files=files,data=putData)
+
+        self.assertEqual(403,addTrackReq .status_code)
+        self.assertEqual('Forbidden',addTrackReq .reason)
+        self.assertEqual('User invalid or not loggedin',addTrackReq .text)
     def test_get_existent_track_by_id(self):
         jsonData = {'name': 'Jose',
                     'lastName': 'Perez',
@@ -89,7 +95,7 @@ class TrackTestCase(unittest.TestCase):
         requests.delete('http://localhost:8080/apiv1/tracks/Musica 1')
 
     @unittest.SkipTest
-    def test_updateTrackWithNameTema1(self):
+    def test_updateTrackWithNameTema1WhenIsLogged(self):
         jsonData = {'name': 'Jose',
                     'lastName': 'Perez',
                     'userName': 'JoseYYY',
@@ -115,6 +121,7 @@ class TrackTestCase(unittest.TestCase):
                                          object_hook=lambda d: namedtuple('Track', d.keys())(*d.values()))
         self.assertEqual('Tema 1', secondAlbumResponse.track.trackName)
         self.assertEqual('nuevo contenido', secondAlbumResponse.track.fileContent)
+
     def test_get_All_Tracks(self):
         jsonData = {'name': 'Jose',
                     'lastName': 'Perez',

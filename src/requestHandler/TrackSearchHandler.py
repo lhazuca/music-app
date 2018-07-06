@@ -5,7 +5,6 @@ from src.requestHandler.BaseHandler import BaseHandler
 
 class TrackSearchHandler(BaseHandler):
 
-
     def get(self):
         statusCode = 200
         statusMessage = ''
@@ -25,19 +24,22 @@ class TrackSearchHandler(BaseHandler):
     def post(self):
         statusCode = 200
         statusMessage = 'Track added'
-
         try:
-            fileInfo = self.request.files['file'][0]
-            fileName = fileInfo['filename']
-            owner = self.get_argument('owner')
-            trackName = self.get_argument('trackName')
-            fh = open(self.getFilePath(fileName), 'wb')
-            fh.write(fileInfo['body'])
-            fh.close()
-            fileContent = fileName
-            self.application.db.addTrack(owner,trackName,fileContent)
+                fileInfo = self.request.files['file'][0]
+                fileName = fileInfo['filename']
+                owner = self.get_argument('owner')
+                if self.application.db.isLoggedin(owner):
+                    trackName = self.get_argument('trackName')
+                    fh = open(self.getFilePath(fileName), 'wb')
+                    fh.write(fileInfo['body'])
+                    fh.close()
+                    fileContent = fileName
+                    self.application.db.addTrack(owner,trackName,fileContent)
+                else:
+                    statusCode=403
+                    statusMessage='User invalid or not loggedin'
         except Exception as e:
-            #raise e
+            raise e
             statusCode = 400
             statusMessage = "Track not added"
         self.set_status(statusCode)

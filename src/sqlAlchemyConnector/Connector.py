@@ -104,7 +104,7 @@ class Connector:
         if user and user.isLoggedin:
             return True
         else:
-            raise ("User invalid or not loggedin")
+            return False
 
 
     # Playlist management

@@ -33,7 +33,12 @@ class TrackHandler(BaseHandler):
         statusMessage = 'Track updated'
         try:
             data= json.loads(self.request.body.decode('utf-8'))
-            self.application.db.updateTrack(trackId,data)
+            owner = data['owner']
+            if self.application.db.isLoggedin(owner):
+                self.application.db.updateTrack(trackId,data)
+            else:
+                statusCode = 403
+                statusMessage = 'User invalid or not loggedin'
         except Exception as e:
             #raise e
             statusMessage = 'Track not update'
